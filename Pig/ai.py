@@ -1,3 +1,4 @@
+# TODO: add ai implementaion 
 class Ai():
     def __init__(self, difficulty) -> None:
         self.name = ""        
