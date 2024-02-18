@@ -1,3 +1,11 @@
+import ui
+
+def main():
+
+    ui = ui.Ui()
+    ui.cmdloop()
 
 
-print("hello world")
+
+if __name__ == "__main__":
+    main()
