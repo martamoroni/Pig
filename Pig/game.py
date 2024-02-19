@@ -8,6 +8,7 @@ class Game():
         self.current_player = player1
         self.game_paused = False
         self.current_score = 0
+        ran = random()
 
     def start(self) -> bool:
         self.print_game_state()
@@ -25,11 +26,11 @@ class Game():
 
     def rolled_one(self) -> bool:
         if not self.game_paused:
-            dice_roll = random.ranint(1, 6)
+            dice_roll = self.ran.ranint(1, 6)
             print(f"the dice roll is {dice_roll}")
             if dice_roll == 1:
                 self.current_score = 0
-                self.chang_player()
+                self.change_player()
                 return True
             self.current_score += dice_roll
         else:

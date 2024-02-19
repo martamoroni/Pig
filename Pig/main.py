@@ -2,8 +2,8 @@ import ui
 
 def main():
 
-    ui = ui.Ui()
-    ui.cmdloop()
+    ui2 = ui.Ui()
+    ui2.cmdloop()
 
 
 

@@ -4,6 +4,7 @@ import cmd
 
 class Ui(cmd.Cmd):
     def __init__(self) -> None:
+        super().__init__()
         self.prompt = "(Game) > "
         self.completekey = "tab"
         self.cmdqueue = []
@@ -21,6 +22,7 @@ class Ui(cmd.Cmd):
 
 
     def do_MENU(self, argv):
+        """Instantiate an object and check its properties."""
         print("\n----- MENU -----")
         print("1. Start") # New game
         print("2. ContinueGame")

@@ -4,20 +4,19 @@ import pickle
 class ScoreBoared():
     
     def __init__(self) -> None:
-        players = dict()
-        file_name = "high_scores.bin"
-        self.loade_scores(file_name)
+        self.file_name = "high_scores.bin"
+        self.players = self._load_scores(self.file_name)
     
     def up_date_score(self, game) -> None:
-        self.up_date_game_played(game.player1.name)
-        self.up_date_game_played(game.player2.name)
-        self.up_date_game_won(game.current_player.name)
+        self._up_date_game_played(game.player1.name)
+        self._up_date_game_played(game.player2.name)
+        self._up_date_game_won(game.current_player.name)
 
-    def up_date_game_played(self, player) -> None:
+    def _up_date_game_played(self, player) -> None:
         self.players[player] = self.players.get(player, {"wins":0, "played":0})
         self.players[player]["played"] += 1
         
-    def up_date_game_won(self, player) -> None:
+    def _up_date_game_won(self, player) -> None:
         self.players[player] = self.players.get(player, {"wins":0, "played":0})
         self.players[player]["wins"] += 1
 
@@ -28,16 +27,17 @@ class ScoreBoared():
     def name_exists(self, name):
         return name in self.players
 
-    def save_scores(self) -> None:
-        with open("high_scores.bin", "wb") as f:
+    def save_scores(self, file_name) -> None:
+        with open(file_name, "wb") as f:
             pickle.dump(self.players, f)
 
-    def load_scores(self, file_name) -> None:
+    def _load_scores(file_name) -> dict:
         try:
             with open(file_name, "rb") as f:
-                self.players = pickle.load(f)
+                return pickle.load(f)
         except FileNotFoundError:
             print("cring Error no scores useing empty score board")
+            return {}
             
     def __str__(self) -> str:
         return "test"
