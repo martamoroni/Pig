@@ -35,7 +35,7 @@ class test_score_boared(unittest.TestCase):
         self.assertTrue(boared.name_exists("test_name"))
         self.assertFalse(boared.name_exists("test"))
 
-    def test_load_scores(self):
+    def test_load_scores_defalt(self):
         boared = score_boared.ScoreBoared()
         res = boared._load_scores("test_file.bin")
         self.assertIsInstance(dict, res)

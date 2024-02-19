@@ -1,5 +1,7 @@
 # TODO: add ai implementaion 
 import pickle
+
+
 class Ai():
     def __init__(self, difficulty) -> None:
         self.name = None        

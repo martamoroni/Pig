@@ -8,11 +8,10 @@ class Game():
         self.current_player = player1
         self.game_paused = False
         self.current_score = 0
-        ran = random()
+        self.ran = random()
 
     def start(self) -> bool:
         self.print_game_state()
-
         while True:
             if self.rolled_one():
                 continue
@@ -36,7 +35,6 @@ class Game():
         else:
             self.game_paused = False
         return False
-
 
     def is_game_over(self) -> bool:
         if self.current_turn.points >= 100:

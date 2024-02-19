@@ -4,7 +4,7 @@ import pickle
 class ScoreBoared():
     
     def __init__(self) -> None:
-        self.file_name = "high_scores.bin"
+        self.file_name = "docs/high_scores.bin"
         self.players = self._load_scores(self.file_name)
     
     def up_date_score(self, game) -> None:
