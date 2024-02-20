@@ -1,9 +1,12 @@
 # TODO: add ai implementaion 
 import pickle
 
+"""game ai behaviour."""
 
 class Ai():
+    """ai instance."""
     def __init__(self, difficulty) -> None:
+        """initiation object."""
         self.name = None        
         self.file_name = "docs/pig_perfect_play.bin"
         self.perfect_play = None
@@ -11,10 +14,12 @@ class Ai():
 
         
     def load_perfect_play(self) -> None:
+        """load the perfect play instructions."""
         with open (self.file_name, 'rb') as f:
             self.perfect_play = pickle.load(f)
 
     def select_dificulty(self, difficulty) -> function:
+        """set name for dificulty and returns coresponding method."""
         def simple(game) -> bool:
             pass
         def normal(game) -> bool:
