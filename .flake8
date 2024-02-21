@@ -1,0 +1,7 @@
+[flake8]
+exclude =
+	.git,
+	__pycacha__,
+	.wenv,
+	test/
+
