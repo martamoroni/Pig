@@ -1,6 +1,4 @@
-# change things from cmd to normal user input 
-
-import cmd
+import cmd, player, ai, game
 
 class Ui(cmd.Cmd):
     def __init__(self) -> None:
@@ -10,8 +8,6 @@ class Ui(cmd.Cmd):
         self.cmdqueue = []
 
         self.in_menu = False
-        self.in_start = False
-        self.in_difficulty = False
 
         self.initialization_menu()
 
@@ -22,75 +18,111 @@ class Ui(cmd.Cmd):
 
 
     def do_MENU(self, argv):
-        """Instantiate an object and check its properties."""
-        print("\n----- MENU -----")
-        print("1. Start") # New game
-        print("2. ContinueGame")
-        print("3. Board")
-        print("4. ChangeName")
-        print("5. Rules")
-        print("6. Exit\n")
+        self.display_menu()
+        self.get_menu_choice()
+        
         self.in_menu = True
 
     
-    def do_Start(self, argv):
-        if self.in_menu:
-            print("\nChoose game type:\n")
-            print("1. 1VS1")
-            print("2. 1VSAI")
-            print("MENU")
-            self.in_menu = False
-            self.in_start = True
-        else:
-            print("Select option from current menu")
+    def display_menu(self):
+        print("\n----- MENU -----")
+        print("1. Start")               # Done
+        # print("2. Continue game")     # Might implement later
+        print("3. Board")               #
+        print("4. Change name")         # 
+        print("5. Rules")               #
+        print("6. Exit\n")              # Done
 
 
-    def do_1VS1(self, argv):
-        pass
+    def get_menu_choice(self):
+        choice = input("Enter choice: ").lower()
+
+        match choice:
+            case "1", "start":
+                self.start_game()
+            case "2", "continue game":
+                pass
+            case "3", "board":
+                pass
+            case "4", "change name":
+                pass
+            case "5", "rules":
+                self.display_rules()
+            case "6", "exit":
+                self.do_Quit()
+            case _:
+                self.invalid_choice
 
 
-    def do_1VSAI(self, argv):
-        if self.in_start:
-            print("\nChoose difficulty:\n")
-            print("1. Piglet")
-            print("2. Pig")
-            print("3. Boar")
-            print("4. MENU")
-            self.in_start = False
-            self.in_start = True
+    def start_game(self):
+        player1, player2 = self.set_game_type()
 
-    
-    def do_Piglet(self, argv):
-        pass
+        game.Game(player1, player2)
 
 
-    def do_Pig(self, argv):
-        pass
+    def set_game_type(self):
+        self.display_game_types()
+
+        valid_choice = False
+
+        while not valid_choice:
+            choice = input("Select game: ").lower()
+
+            match choice:
+                case "1 vs 1":
+                    name1 = input("Name player 1: ")
+                    name2 = input("Name player 2: ")
+                    return player.Player(name1), player.Player(name2) 
+                case "1 vs ai":
+                    name1 = input("Name player 1: ")
+                    difficulty = self.set_difficulty()
+                    return player.Player(name1), ai.Ai(difficulty)
+                case _:
+                    self.invalid_choice()
 
 
-    def do_Boar(self, argv):
-        pass
+    def display_game_types(self):
+        print("\nChoose game type:\n")
+        print("1. 1 VS 1")
+        print("2. 1 VS AI")
 
 
-    def do_ContinueGame(self, argv):
-        pass
+    def set_difficulty(self):
+        self.display_difficulties()
 
-    def do_Board(self, argv):
-        pass
+        valid_choice = False
 
-    def do_ChangeName(self, argv):
-        pass
+        while not valid_choice:
+            choice = input("Select game: ").lower()
 
-    def do_Rules(self, argv):
-        pass
+            match choice:
+                case "1", "piglet":
+                    return "piglet"
+                case "2", "pig":
+                    return "pig"
+                case "1", "boar":
+                    return "boar"
+                case _:
+                    self.invalid_choice()
 
-    def do_Exit(self, argv):
+
+    def display_difficulties(self):
+        print("\nChoose difficulty:\n")
+        print("1. Piglet")
+        print("2. Pig")
+        print("3. Boar")
+
+
+    def invalid_choice(self):
+        print("Please enter valid choice")
+
+
+    def do_Quit(self, argv):
         """This exits the program"""
-        if self.in_menu:
-            return True
-        else:
-            print("Select option from current menu")
+        return True
     
     
     #aliasing
     do_menu = do_MENU
+    do_quit = do_Quit
+    do_6 = do_Quit
