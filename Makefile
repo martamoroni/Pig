@@ -11,6 +11,7 @@ version:
 venv:
 	[ -d .venv ] || $(PYTHON) -m venv .venv
 	$printf ". .venv/Scripts/sctivate\n"
+	$printf ". .venv/bin/activate\n"
 
 
 install:
@@ -38,7 +39,7 @@ clean-all: clean clean-doc
 
 pylint:
 	@$(call MESSAGE,$@)
-	-cd guess && $(PYTHON) -m pylint *.py
+	-cd Pig && $(PYTHON) -m pylint *.py
 
 
 flake8:
@@ -53,7 +54,7 @@ lint: flake8 pylint
 black:
 	
 	@$(call MESSAGE,$@)
-	$(PYTHON) -b black Pig/ test/
+	$(PYTHON) -m black Pig/ test/
 
 
 codestyle: black

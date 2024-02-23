@@ -2,6 +2,6 @@
 exclude =
 	.git,
 	__pycacha__,
-	.wenv,
+	.venv,
 	test/
 
