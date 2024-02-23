@@ -21,11 +21,11 @@ class Game:
             if self.rolled_one():
                 continue
             if self.current_player.roll_dice(self):
-                continue
+                continue 
             if self.current_player.pause_game:
-                return self
+                return False
             if self.is_game_over():
-                return None
+                return True
             self.change_player()
             
     def rolled_one(self) -> bool:
@@ -59,6 +59,7 @@ class Game:
         self.current_player = (
             self.player2 if self.current_player == self.player1 else self.player1
         )
+        self.print_game_state()
 
     def print_game_state(self) -> None:
         """displays the current game state."""

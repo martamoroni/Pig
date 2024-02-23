@@ -10,7 +10,7 @@ class Ai:
     def __init__(self, difficulty) -> None:
         """initiation object."""
         self.name = None
-        self.file_name = "docs/pig_perfect_play.bin"
+        self.file_name = "pig_perfect_play.bin"
         self.perfect_play = None
         self.roll_dice = self.select_dificulty(difficulty)
         self.points = 0
@@ -42,6 +42,7 @@ class Ai:
                 self.name = "pig"
                 return normal
             case 3:
+                self.load_perfect_play()
                 self.name = "Boar"
                 return hard
             case _:

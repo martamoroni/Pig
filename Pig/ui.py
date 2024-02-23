@@ -8,8 +8,9 @@ class Ui(cmd.Cmd):
         self.prompt = "(Game) > "
         self.completekey = "tab"
         self.cmdqueue = []
+        self.high_score = score_boared.ScoreBoared()
 
-        self.initialization_menu()
+        self.do_menu()
 
     def initialization_menu(self):
         """Displays starting menu."""
@@ -21,7 +22,7 @@ class Ui(cmd.Cmd):
         self.display_menu()
         self.get_menu_choice()
 
-    def display_menu(self):
+    def do_menu(self):
         """Prints menu."""
         print("\n----- MENU -----")
         print("1. Start")  # Done
@@ -31,31 +32,22 @@ class Ui(cmd.Cmd):
         print("5. Rules")  # Have to change a bit
         print("6. Exit\n")  # Done
 
-    def get_menu_choice(self):
-        """Gets user choice."""
-        choice = input("Enter choice: ").lower()
+    def do_board(self):
+        print(self.high_score)
 
-        match choice:
-            case "1", "start":
-                self.start_game()
-            # case "2", "continue game":
-            #    pass
-            case "3", "board":
-                print(score_boared.ScoreBoared())
-            # case "4", "change name":  # Should we change name during game?
-            #    pass
-            case "5", "rules":
-                self.display_rules()
-            case "6", "exit":
-                self.do_Quit()
-            case _:
-                self.invalid_choice
 
-    def start_game(self):
+    def do_change(self):
+        pass
+
+
+    def do_start(self):
         """Selects game type and starts new game."""
         player1, player2 = self.set_game_type()
 
-        game.Game(player1, player2)
+        game1 = game.Game(player1, player2)
+        game1.start()
+
+        self.high_score.up_date_score(game1)
 
     def set_game_type(self):
         """Selects game type, returns players in new game."""
@@ -71,7 +63,7 @@ class Ui(cmd.Cmd):
                     name1 = input("Name player 1: ")
                     name2 = input("Name player 2: ")
                     return player.Player(name1), player.Player(name2)
-                case "1 vs ai":
+                case "2":
                     name1 = input("Name player 1: ")
                     difficulty = self.set_difficulty()
                     return player.Player(name1), ai.Ai(difficulty)
@@ -95,11 +87,11 @@ class Ui(cmd.Cmd):
 
             match choice:
                 case "1", "piglet":
-                    return "piglet"
+                    return 1
                 case "2", "pig":
-                    return "pig"
-                case "3", "boar":
-                    return "boar"
+                    return 2
+                case "3":
+                    return 3
                 case _:
                     self.invalid_choice()
 
@@ -110,7 +102,7 @@ class Ui(cmd.Cmd):
         print("2. Pig")
         print("3. Boar")
 
-    def display_rules(self):
+    def do_rules(self):
         """Displays game rules."""
         print(
             'Each turn, a player repeatedly rolls a die until either a 1 is rolled or the player decides to "hold":'
