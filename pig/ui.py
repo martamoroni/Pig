@@ -101,7 +101,6 @@ class Ui(cmd.Cmd):
                 case "3", "boar":
                     return "boar"
                 case _:
-                    self.invalid_choice()
 
     def display_difficulties(self):
         """Prints AI difficulties menu."""

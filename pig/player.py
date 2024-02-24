@@ -13,7 +13,7 @@ class Player:
             if choice == "yes":
                 return True
             elif choice == "no":
-                return False
+                return False 
             else:
                 print("Please enter valid choice: 'yes' or 'no'")
 

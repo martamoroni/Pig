@@ -13,7 +13,7 @@ class Game:
         self.current_player = player1
         self.game_paused = False
         self.current_score = 0
-
+                
     def start(self) -> bool:
         """the game loop."""
         self.print_game_state()
@@ -23,11 +23,12 @@ class Game:
             if self.current_player.roll_dice(self):
                 continue
             if self.current_player.pause_game:
-                return self
+                return True 
             if self.is_game_over():
-                return None
+                return True
             self.change_player()
-            
+                                                
+
     def rolled_one(self) -> bool:
         """rolls the dice and check if it is a one."""
         if not self.game_paused:
