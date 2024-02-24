@@ -30,7 +30,7 @@ class ScoreBoared:
 
     def up_date_name(self, old_name, new_name) -> None:
         """up date name in the score boared."""
-        self.players[new_name] = self.players[old_name]
+        self.players[new_name] = self.players.get(old_name, {"wins": 0, "played": 0})
         del self.players[old_name]
 
     def name_exists(self, name):
