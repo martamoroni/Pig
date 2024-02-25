@@ -14,11 +14,13 @@ class Player:
             if choice == "yes":
                 return True
             elif choice == "no":
-                return False 
+                return False
             elif choice == "cheating":
                 self.points = 90
+                return True
             elif choice == "exit":
                 game.game_paused = True
+                return False
             else:
                 print("Please enter valid choice: 'yes' or 'no'")
 

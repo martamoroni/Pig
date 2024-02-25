@@ -1,8 +1,11 @@
 """unit test."""
+
 import unittest
-from Pig import score_boared
-from Pig import game
-from Pig import ai
+from pig import score_boared
+from pig import game
+from pig import ai
+import os
+
 
 class test_score_boared(unittest.TestCase):
     """test score boared class."""
@@ -56,3 +59,18 @@ class test_score_boared(unittest.TestCase):
         boared = score_boared.ScoreBoared()
         res = boared._load_scores("test_file.bin")
         self.assertIsInstance(res, dict)
+
+    def test_save_scores(self):
+        boared = score_boared.ScoreBoared()
+        boared.file_name = "docs/test_file.bin"
+        boared.save_scores(boared.file_name)
+        self.assertTrue(os.path.exists("docs/test_file.bin"))
+        os.remove("docs/test_file.bin")
+
+    def test_string(self):
+        boared = score_boared.ScoreBoared()
+        boared._up_date_game_played("test")
+        boared._up_date_game_played("test")
+        boared._up_date_game_won("test")
+        print(boared)
+        self.assertTrue("50" in boared.__str__())

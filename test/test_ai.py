@@ -1,6 +1,8 @@
 # TODO: test ai implementation
+import random
 import unittest
-from Pig import ai
+from pig import ai
+from pig import game
 
 """Unit test."""
 
@@ -47,19 +49,30 @@ class test_ai(unittest.TestCase):
         self.assertEqual(exp, res)
         self.assertEqual("pig", ai_obj.name)
 
-  
-
-    #  def test_file_not_found(self):
-    #     """load non existing file."""
-    #    ai_obj = ai.Ai(2)
-
-    #    ai_obj.file_name = "test_file.bin"
-
-    #    with self.assertRaises(FileNotFoundError):
-    #        ai_obj.select_dificulty(3)
-
     def test_load_file(self):
         """load existing file."""
         ai_obj = ai.Ai(1)
         ai_obj.load_perfect_play()
         self.assertIsInstance(ai_obj.perfect_play, dict)
+
+    def test_normal_ai(self):
+        ai_obj = ai.Ai(2)
+        game_obj = game.Game(ai_obj, ai_obj)
+        game_obj.current_score = 19
+        self.assertTrue(ai_obj.roll_dice(game_obj))
+        game_obj.current_score = 20
+        self.assertFalse(ai_obj.roll_dice(game_obj))
+
+    def test_hard_ai(self):
+        ai_obj = ai.Ai(3)
+        game_obj = game.Game(ai_obj, ai_obj)
+        game_obj.current_score = 19
+        self.assertTrue(ai_obj.roll_dice(game_obj))
+        game_obj.current_score = 30
+        self.assertFalse(ai_obj.roll_dice(game_obj))
+
+    def test_easy_ai(self):
+        ai_obj = ai.Ai(1)
+        ai_obj.ran.seed(7)
+        self.assertFalse(ai_obj.roll_dice(2))
+        self.assertTrue(ai_obj.roll_dice(2))

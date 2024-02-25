@@ -39,7 +39,7 @@ clean-all: clean clean-doc
 
 pylint:
 	@$(call MESSAGE,$@)
-	-cd Pig && $(PYTHON) -m pylint *.py
+	-cd pig && $(PYTHON) -m pylint *.py
 
 
 flake8:
@@ -54,7 +54,7 @@ lint: flake8 pylint
 black:
 	
 	@$(call MESSAGE,$@)
-	$(PYTHON) -m black Pig/ test/
+	$(PYTHON) -m black pig/ test/
 
 
 codestyle: black
@@ -90,7 +90,7 @@ pydoc:
 pdoc:
 	
 	@$(call MESSAGE,$@)
-	pdoc --force --html --output-dir doc/pdoc Pig/*.py
+	pdoc --force --html --output-dir doc/pdoc pig/*.py
 
 
 pyreverse:
@@ -108,27 +108,27 @@ doc: pdoc pyreverse #pydoc sphinx
 radon-cc:
 
 	@$(call MESSAGE,$@)
-	radon cc -show-complexity --average Pig
+	radon cc -show-complexity --average pig
 
 radon-mi:
 
 	@$(call MESSAGE,$@)
-	radon mi --show Pig
+	radon mi --show pig
 
 radon-raw:
 
 	@$(call MESSAGE,$@)
-	radon raw Pig
+	radon raw pig
 
 radon-hal:
 
 	@$(call MESSAGE,$@)
-	radon hal Pig
+	radon hal pig
 
 cohesion:
 
 	@$(call MESSAGE,$@)
-	cohesion --directory Pig
+	cohesion --directory pig
 
 metrics: radon-cc radon-mi radon-raw radon-hal cohesion
 
@@ -136,5 +136,5 @@ metrics: radon-cc radon-mi radon-raw radon-hal cohesion
 bandit:
 
 	@$(call MESSAGE,$@)
-	bandit --recursive Pig
+	bandit --recursive pig
 
