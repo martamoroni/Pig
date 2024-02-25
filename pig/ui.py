@@ -1,4 +1,5 @@
 import cmd, player, ai, game, score_board
+from histogram import graph
 
 piglet_art = """
       ,,__
@@ -197,6 +198,9 @@ class Ui(cmd.Cmd):
             return False
 
         return True
+
+    def do_oink(self, _):
+        graph()
 
     # aliasing
     do_Menu = do_menu

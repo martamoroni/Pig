@@ -18,3 +18,4 @@ sphinx-rtd-theme # for ReadTHeDocs local bauild
 
 # Unit test and coverage
 coverage
+matplotlib
