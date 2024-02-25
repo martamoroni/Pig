@@ -10,15 +10,15 @@ class Player:
         print(game.current_score)
         while not valid_choice:
             choice = input("Do you want to roll the dice? (yes/no)").lower()
-
-            if choice == "yes":
+            choice = choice[0]
+            if choice == "y":
                 return True
-            elif choice == "no":
+            elif choice == "n":
                 return False
-            elif choice == "cheating":
+            elif choice == "c":
                 self.points = 90
                 return True
-            elif choice == "exit":
+            elif choice == "e":
                 game.game_paused = True
                 return False
             else:

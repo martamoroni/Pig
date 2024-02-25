@@ -3,7 +3,7 @@
 import pickle
 
 
-class ScoreBoared:
+class ScoreBoard:
     """Score boared."""
 
     def __init__(self) -> None:
@@ -37,7 +37,7 @@ class ScoreBoared:
         """Test if name is in the score boared."""
         return name in self.players
 
-    def save_scores(self, file_name) -> None:
+    def save_scores(self, file_name="docs/high_scores.bin") -> None:
         """Save the score to a file."""
         with open(file_name, "wb") as f:
             pickle.dump(self.players, f)
@@ -54,25 +54,28 @@ class ScoreBoared:
     def calc_percent(self) -> list:
         """Calc win percentig."""
         player_percent = []
+        longest = 0
         for player in self.players:
+            longest = longest if len(player) < longest else len(player)
             wins = self.players[player]["wins"]
             played = self.players[player]["played"]
             percent = (wins / played) * 100
             player_percent.append((player, percent))
 
         player_percent.sort(key=lambda x: x[1], reverse=True)
-        return player_percent
+        return player_percent, longest
 
     def __str__(self) -> str:
         """Display the current score boared."""
-        player_percent = self.calc_percent()
-        score_boared = f"{'Name':<10}{'wins':<10}" + f"{'played':<10}{'Percent':<10}\n"
+        player_percent, longest = self.calc_percent()
+        score_boared = f"{'Name':<{longest}}{'wins':<10}"
+        score_boared += f"{'played':<10}{'Percent':<10}\n"
         i = 1
         for tub in player_percent:
             wins = self.players[tub[0]]["wins"]
             played = self.players[tub[0]]["played"]
             score_boared += (
-                f"{i}: {tub[0]:<7}{wins:>7}" + f"{played:>7}{tub[1]:>10.0f}\n"
+                f"{i}: {tub[0]:<{longest}}{wins:>7}" + f"{played:>7}{tub[1]:>10.0f}%\n"
             )
             i += 1
         return score_boared

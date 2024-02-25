@@ -17,6 +17,7 @@ class Game:
 
     def start(self) -> bool:
         """Game loop."""
+        print("| Roll dice | | Cheat | Exit |")
         self.print_game_state()
         while True:
             dice_roll = self.ran.randint(1, 6)
@@ -26,6 +27,7 @@ class Game:
                 continue
             if self.game_paused:
                 return False
+            self.end_turn()
             if self.is_game_over():
                 return True
             self.change_player()
@@ -65,6 +67,6 @@ class Game:
 
     def print_game_state(self) -> None:
         """Display the current game state."""
-        print(f"{self.player1.name} has {self.player1.points} paonts")
+        print(f"\n{self.player1.name} has {self.player1.points} paonts")
         print(f"{self.player2.name} has {self.player2.points} points\n")
         print(f"{self.current_player.name}s turn\n")

@@ -1,4 +1,4 @@
-import cmd, player, ai, game, score_boared
+import cmd, player, ai, game, score_board
 
 piglet_art = """
       ,,__
@@ -39,10 +39,9 @@ class Ui(cmd.Cmd):
         self.prompt = "(Game) > "
         self.completekey = "tab"
         self.cmdqueue = []
-        self.high_score = score_boared.ScoreBoared()
+        self.high_score = score_board.ScoreBoard()
 
         self.do_menu()
-
 
     def do_menu(self):
         """Prints menu."""
@@ -54,12 +53,10 @@ class Ui(cmd.Cmd):
         print("\u2022Rules")  # Have to change a bit
         print("\u2022Exit\n")
 
-
     def do_board(self, argv):
         print(self.high_score)
-        
-        self.do_menu()
 
+        self.do_menu()
 
     def do_changename(self, argv):
         """Changes name of a player"""
@@ -84,7 +81,6 @@ class Ui(cmd.Cmd):
 
         self.do_menu()
 
-
     def do_start(self, argv):
         """Selects game type and starts new game."""
         player1, player2 = self.set_game_type()
@@ -94,8 +90,6 @@ class Ui(cmd.Cmd):
         game1.start()
 
         self.high_score.up_date_score(game1)
-
-        self.do_quit()
 
 
     def set_game_type(self):
@@ -112,7 +106,11 @@ class Ui(cmd.Cmd):
                     name1 = input("\nName player 1: ")
                     name2 = input("Name player 2: ")
 
-                    if self.is_valid_name(name1) and self.is_valid_name(name2) and name1 != name2:
+                    if (
+                        self.is_valid_name(name1)
+                        and self.is_valid_name(name2)
+                        and name1 != name2
+                    ):
                         return player.Player(name1), player.Player(name2)
                     else:
                         print("Invalid name")
@@ -127,13 +125,11 @@ class Ui(cmd.Cmd):
                 case _:
                     self.invalid_choice()
 
-
     def display_game_types(self):
         "Prints game types menu."
         print("\nChoose game type:\n")
         print("1. 1 VS 1")
         print("2. 1 VS AI")
-
 
     def set_difficulty(self):
         """Returns selected difficulty for AI."""
@@ -148,19 +144,19 @@ class Ui(cmd.Cmd):
                 case "piglet":
                     self.display_AI(choice, piglet_art)
                     return 1
-                case "pig" :
+                case "pig":
                     self.display_AI(choice, pig_art)
                     return 2
                 case "boar":
                     self.display_AI(choice, boar_art)
                     return 3
                 case _:
-
+                    print("\033[A                             \033[A")
+                    self.invalid_choice()
 
     def display_AI(self, choice, art):
         print(f"\n{choice} is approaching...")
         print(art)
-
 
     def display_difficulties(self):
         """Prints AI difficulties menu."""
@@ -168,7 +164,6 @@ class Ui(cmd.Cmd):
         print("\u2022Piglet")
         print("\u2022Pig")
         print("\u2022Boar")
-
 
     def do_rules(self, argv):
         """Displays game rules."""
@@ -188,23 +183,20 @@ class Ui(cmd.Cmd):
 
         self.do_menu()
 
-
     def invalid_choice(self):
         """Prints message for invalid choice"""
         print("Please enter valid choice")
 
-
     def do_quit(self, argv):
         """Exits the program"""
+        self.high_score.save_scores()
         return True
-    
-    
+
     def is_valid_name(self, name):
         if name == "piglet" or name == "pig" or name == "boar":
             return False
-        
-        return True
 
+        return True
 
     # aliasing
     do_Menu = do_menu
@@ -215,4 +207,3 @@ class Ui(cmd.Cmd):
     do_Board = do_board
     do_ChangeName = do_changename
     do_Rules = do_rules
-

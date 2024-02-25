@@ -1,10 +1,10 @@
 """unit test."""
+
 import unittest
 from pig import game
 from pig import player
 from pig import ai
 from unittest import mock
-
 
 
 class test_game(unittest.TestCase):
