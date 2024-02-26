@@ -8,9 +8,11 @@ version:
 
 
 
+
+
 venv:
 	[ -d .venv ] || $(PYTHON) -m venv .venv
-	$printf ". .venv/Scripts/sctivate\n"
+	$printf ". .venv/Scripts/activate\n"
 	$printf ". .venv/bin/activate\n"
 
 
@@ -21,6 +23,12 @@ install:
 installed:
 	$(PYTHON) -m pip list
 
+
+win-start-venv:
+	. .venv/Scripts/activate
+
+
+start: venv win-start-venv install
 
 clean:
 	@$(call MESSAGE,$@)
