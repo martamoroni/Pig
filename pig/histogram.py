@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
-
+import pickle
 
 
 def graph():
-    with open("pig_perfect_play.bin", 'rb') as f:
+    with open("docs/pig_perfect_play.bin", 'rb') as f:
         z_dics = pickle.load(f)
 
 
