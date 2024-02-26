@@ -1,13 +1,18 @@
-import cmd, player, ai, game, score_board
+"""Module that defines the UI class."""
+
+import cmd
+import player
+import ai
+import game
+import score_board
 from histogram import graph
 
 piglet_art = """
       ,,__
     c''   )?
-      '''' 
-"""
+      '''' """
 pig_art = """              _
-         <`--'\>______
+         <`--'\\>______
          /. .  `'     \\
         (`')  ,        @
          `-._,        /
@@ -16,24 +21,26 @@ pig_art = """              _
 """
 boar_art = """                                               __
              ____               ________     ,',.`.
-           \`''-.`-._..--...-'''        ```--':_ ) )
+           \\`''-.`-._..--...-'''        ```--':_ ) )
             `-.._` '              -..           ' /
      ,'`..__..'' -. _ `._                         \\
     ('';`      _ ,''       .-'            ,'       :
      `-._     `*/     ,                  '      .  |
-        _.:._   `-'`-'  ;   \                  ,'  ;
-     .':::::'`    ,' \,'     :         ;          /
+        _.:._   `-'`-'  ;   \\                  ,'  ;
+     .':::::'`    ,' \\,'     :         ;          /
       `-..__        ,'/      |       ,'         ,'
-            ``---;'` \ `     ;.____..-'`.     ,'\\
-                /   / \:    :            :   (\ `\\
-              ,'  .'   \    :           ;'   / )  )
-             /,_,.;::.  `.   \         /   ,',',_(:::.
+            ``---;'` \\ `     ;.____..-'`.     ,'\\
+                /   / \\:    :            :   (\\ `\\
+              ,'  .'   \\    :           ;'   / )  )
+             /,_,.;::.  `.   \\         /   ,',',_(:::.
                           `.  `.     ,'  ;'
                            /,_,'::. `-'`':SSt:.
 """
 
 
 class Ui(cmd.Cmd):
+    """Class used to represent a Ui."""
+
     def __init__(self) -> None:
         """Initialize Ui object and prints menu."""
         super().__init__()
@@ -45,7 +52,7 @@ class Ui(cmd.Cmd):
         self.do_menu()
 
     def do_menu(self):
-        """Prints menu."""
+        """Print menu."""
         print("\n----- MENU -----")
         print("\u2022Start")
         # print("2. Continue game")     # Might implement later
@@ -55,12 +62,13 @@ class Ui(cmd.Cmd):
         print("\u2022Exit\n")
 
     def do_board(self, argv):
+        """Print board."""
         print(self.high_score)
 
         self.do_menu()
 
     def do_changename(self, argv):
-        """Changes name of a player"""
+        """Change name of a player."""
         old_name = input("Enter current name: ")
         done = False
 
@@ -83,7 +91,7 @@ class Ui(cmd.Cmd):
         self.do_menu()
 
     def do_start(self, argv):
-        """Selects game type and starts new game."""
+        """Select game type and start new game."""
         player1, player2 = self.set_game_type()
 
         game1 = game.Game(player1, player2)
@@ -92,9 +100,8 @@ class Ui(cmd.Cmd):
 
         self.high_score.up_date_score(game1)
 
-
     def set_game_type(self):
-        """Selects game type, returns players in new game."""
+        """Select game type, return players in new game."""
         self.display_game_types()
 
         valid_choice = False
@@ -127,13 +134,13 @@ class Ui(cmd.Cmd):
                     self.invalid_choice()
 
     def display_game_types(self):
-        "Prints game types menu."
+        """Print game types menu."""
         print("\nChoose game type:\n")
         print("1. 1 VS 1")
         print("2. 1 VS AI")
 
     def set_difficulty(self):
-        """Returns selected difficulty for AI."""
+        """Return selected difficulty for AI."""
         self.display_difficulties()
 
         valid_choice = False
@@ -156,50 +163,58 @@ class Ui(cmd.Cmd):
                     self.invalid_choice()
 
     def display_AI(self, choice, art):
+        """Print selected AI."""
         print(f"\n{choice} is approaching...")
         print(art)
 
     def display_difficulties(self):
-        """Prints AI difficulties menu."""
+        """Print AI difficulties menu."""
         print("Choose AI difficulty:")
         print("\u2022Piglet")
         print("\u2022Pig")
         print("\u2022Boar")
 
     def do_rules(self, argv):
-        """Displays game rules."""
+        """Display game rules."""
         print(
-            'Each turn, a player repeatedly rolls a die until either a 1 is rolled or the player decides to "hold":'
+            """Each turn, a player repeatedly rolls a die until either """
+            """a 1 is rolled or the player decides to "hold":"""
         )
         print(
-            "\u2022If the player rolls a 1, they score nothing and it becomes the next player's turn."
+            """\u2022If the player rolls a 1, """
+            """they score nothing and it becomes the next player's turn."""
         )
         print(
-            "\u2022If the player rolls any other number, it is added to their turn total and the player's turn continues."
+            """\u2022If the player rolls any other number, it is """
+            """added to their turn total and the player's turn continues."""
         )
         print(
-            '\u2022If a player chooses to "hold", their turn total is added to their score, and it becomes the next player\'s turn.'
+            '\u2022If a player chooses to "hold", their turn total is added '
+            ""
+            """to their score, and it becomes the next player\'s turn."""
         )
         print("The first player to score 100 or more points wins.")
 
         self.do_menu()
 
     def invalid_choice(self):
-        """Prints message for invalid choice"""
+        """Print message for invalid choice."""
         print("Please enter valid choice")
 
     def do_quit(self, argv):
-        """Exits the program"""
+        """Exit the program."""
         self.high_score.save_scores()
         return True
 
     def is_valid_name(self, name):
+        """Check if name is valid: is not equal to one of the AI types."""
         if name == "piglet" or name == "pig" or name == "boar":
             return False
 
         return True
 
     def do_oink(self, _):
+        """Show Easter egg."""
         graph()
 
     # aliasing
