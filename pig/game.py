@@ -1,4 +1,3 @@
-# TODO: how should game be displayed
 """Pig dice game."""
 import random
 
