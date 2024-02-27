@@ -1,11 +1,16 @@
+"""Module that defines the Player class."""
+
+
 class Player:
+    """Class used to represent a Player."""
+
     def __init__(self, name) -> None:
         """Initialize Player object."""
         self.name = name
         self.points = 0
 
     def roll_dice(self, game) -> bool:
-        """Checks if player wants to roll the dice, return True or False."""
+        """Check if player wants to roll the dice, return True or False."""
         valid_choice = False
         print(game.current_score)
         while not valid_choice:
@@ -25,6 +30,6 @@ class Player:
                 print("Please enter valid choice: 'yes' or 'no'")
 
     def change_name(self):
-        """Changes player name."""
+        """Change player name."""
         new_name = input("Set new name: ")
         self.name = new_name

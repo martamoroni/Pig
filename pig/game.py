@@ -1,4 +1,5 @@
 """Pig dice game."""
+
 import random
 
 
