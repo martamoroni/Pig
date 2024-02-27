@@ -12,8 +12,8 @@ version:
 
 venv:
 	[ -d .venv ] || $(PYTHON) -m venv .venv
-	$printf ". .venv/Scripts/activate\n"
-	$printf ". .venv/bin/activate\n"
+	@printf ". .venv/Scripts/activate\n"
+	@printf ". .venv/bin/activate\n"
 
 
 install:
@@ -23,12 +23,6 @@ install:
 installed:
 	$(PYTHON) -m pip list
 
-
-start-venv:
-	. .venv/Scripts/activate || . .venv/bin/activate
-
-
-init: venv start-venv install
 
 start:
 	$(PYTHON) pig/main.py
