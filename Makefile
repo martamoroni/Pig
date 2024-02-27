@@ -24,11 +24,14 @@ installed:
 	$(PYTHON) -m pip list
 
 
-win-start-venv:
-	. .venv/Scripts/activate
+start-venv:
+	. .venv/Scripts/activate || . .venv/bin/activate
 
 
-start: venv win-start-venv install
+init: venv start-venv install
+
+start:
+	$(PYTHON) pig/main.py
 
 clean:
 	@$(call MESSAGE,$@)
