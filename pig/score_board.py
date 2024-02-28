@@ -74,8 +74,7 @@ class ScoreBoard:
         for tub in player_percent:
             wins = self.players[tub[0]]["wins"]
             played = self.players[tub[0]]["played"]
-            score_boared += (
-                f"{i}: {tub[0]:<{longest}}{wins:>7}" + f"{played:>7}{tub[1]:>10.0f}%\n"
-            )
+            score_boared += f"{i}: {tub[0]:<{longest}}{wins:>7}"
+            score_boared += f"{played:>7}{tub[1]:>10.0f}%\n"
             i += 1
         return score_boared

@@ -6,10 +6,6 @@ version:
 	which $(PYTHONE)
 	$(PYTHON) --version
 
-
-
-
-
 venv:
 	[ -d .venv ] || $(PYTHON) -m venv .venv
 	@printf ". .venv/Scripts/activate\n"
@@ -88,7 +84,7 @@ pydoc:
 
 	@$(call MESSAGE,$@)
 	install -d doc/pydoc
-	$(PYTHON) -m pydoc -w Pig/*.py
+	$(PYTHON) -m pydoc -w pig/*.py
 	mv *.html doc/pydoc
 
 
@@ -102,12 +98,12 @@ pyreverse:
 
 	@$(call MESSAGE,$@)
 	install -d doc/pyreverse
-	pyreverse guess/*.py
-	dot -tpng classes.dot -o doc/pyreverse/classes.png
-	dot -tpng packages.dot -o doc/pyreverse/packages.png
+	pyreverse pig/*.py
+	dot -Tpng classes.dot -o doc/pyreverse/classes.png
+	dot -Tpng packages.dot -o doc/pyreverse/packages.png
 	rm -f classes.dot packages.dot
 
-doc: pdoc pyreverse #pydoc sphinx
+doc: pdoc pyreverse #pydoc #sphinx
 
 
 radon-cc:

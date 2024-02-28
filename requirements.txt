@@ -1,6 +1,6 @@
 # code analysis
 bandit
-#cohesion
+cohesion
 flake8
 flake8-docstrings
 flake8-polyfill

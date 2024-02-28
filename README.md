@@ -1,5 +1,11 @@
 # Pig Dice Game
 
+ __Tabel__
+
+- [Game Rules](##Rules)
+- [Installation](##Installation)
+- [Start the Game](##Play-the-game)
+
 ## About the Game
 - Pig is a game played with either 1 or 2 people
 - The player can either roll or hold
