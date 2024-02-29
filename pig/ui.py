@@ -55,10 +55,9 @@ class Ui(cmd.Cmd):
         """Print menu."""
         print("\n----- MENU -----")
         print("\u2022Start")
-        # print("2. Continue game")     # Might implement later
         print("\u2022Board")
         print("\u2022ChangeName")
-        print("\u2022Rules")  # Have to change a bit
+        print("\u2022Rules")
         print("\u2022Exit\n")
 
     def do_board(self, argv):

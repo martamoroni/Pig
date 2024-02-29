@@ -72,5 +72,4 @@ class test_score_boared(unittest.TestCase):
         boared._up_date_game_played("test")
         boared._up_date_game_played("test")
         boared._up_date_game_won("test")
-        print(boared)
         self.assertTrue("50" in boared.__str__())
