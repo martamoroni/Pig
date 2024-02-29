@@ -1,8 +1,11 @@
-import matplotlib.pyplot as plt
+"""Plots perfect play grath."""
+
 import pickle
+import matplotlib.pyplot as plt
 
 
 def graph():
+    """Load file and diplay it."""
     with open("docs/pig_perfect_play.bin", "rb") as f:
         z_dics = pickle.load(f)
 
@@ -16,6 +19,7 @@ def graph():
 
 
 def plot2dto3d(z_dics):
+    """Plot grath."""
     fig = plt.figure()
     ax = fig.add_subplot(projection="3d")
 
