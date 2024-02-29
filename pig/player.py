@@ -29,7 +29,3 @@ class Player:
             else:
                 print("Please enter valid choice: 'yes' or 'no'")
 
-    def change_name(self):
-        """Change player name."""
-        new_name = input("Set new name: ")
-        self.name = new_name
