@@ -2,10 +2,10 @@
 
 import cmd
 import player
-import ai
-import game
-import score_board
-from histogram import graph
+from pig import game
+from pig.histogram import graph
+from pig import ai
+from pig import score_board
 
 piglet_art = """
       ,,__
@@ -49,9 +49,9 @@ class Ui(cmd.Cmd):
         self.cmdqueue = []
         self.high_score = score_board.ScoreBoard()
 
-        self.do_menu()
+        self.do_menu("")
 
-    def do_menu(self):
+    def do_menu(self, argv):
         """Print menu."""
         print("\n----- MENU -----")
         print("\u2022Start")
@@ -103,34 +103,39 @@ class Ui(cmd.Cmd):
         """Select game type, return players in new game."""
         self.display_game_types()
 
-        valid_choice = False
-
-        while not valid_choice:
+        while True:
             choice = input("Select game: ").lower()
 
-            match choice:
-                case "1":
-                    name1 = input("\nName player 1: ")
-                    name2 = input("Name player 2: ")
+            if choice == "1":
+                self.select_vs_player()
+            elif choice == "2":
+                self.select_vs_Ai()
+            else:
+                self.invalid_choice()
 
-                    if (
-                        self.is_valid_name(name1)
-                        and self.is_valid_name(name2)
-                        and name1 != name2
-                    ):
-                        return player.Player(name1), player.Player(name2)
-                    else:
-                        print("Invalid name")
-                case "2":
-                    name1 = input("\nName player 1: ")
+    def select_vs_player(self):
+        name1 = input("\nName player 1: ")
+        name2 = input("Name player 2: ")
 
-                    if self.is_valid_name(name1):
-                        difficulty = self.set_difficulty()
-                        return player.Player(name1), ai.Ai(difficulty)
-                    else:
-                        print("Invalid name")
-                case _:
-                    self.invalid_choice()
+        if (
+            self.is_valid_name(name1)
+            and self.is_valid_name(name2)
+            and name1 != name2
+        ):
+            return player.Player(name1), player.Player(name2)
+        else:
+            print("Invalid name")
+            self.select_vs_player()
+
+    def select_vs_Ai(self):
+        name1 = input("\nName player 1: ")
+
+        if self.is_valid_name(name1):
+            difficulty = self.set_difficulty()
+            return player.Player(name1), ai.Ai(difficulty)
+        else:
+            print("Invalid name")
+            self.select_vs_Ai()
 
     def display_game_types(self):
         """Print game types menu."""
@@ -142,24 +147,20 @@ class Ui(cmd.Cmd):
         """Return selected difficulty for AI."""
         self.display_difficulties()
 
-        valid_choice = False
-
-        while not valid_choice:
+        while True:
             choice = input("Select difficulty: ").lower()
 
-            match choice:
-                case "piglet":
-                    self.display_AI(choice, piglet_art)
-                    return 1
-                case "pig":
-                    self.display_AI(choice, pig_art)
-                    return 2
-                case "boar":
-                    self.display_AI(choice, boar_art)
-                    return 3
-                case _:
-                    print("\033[A                             \033[A")
-                    self.invalid_choice()
+            if choice == "piglet":
+                self.display_AI(choice, piglet_art)
+                return 1
+            elif choice == "pig":
+                self.display_AI(choice, pig_art)
+                return 2
+            elif choice == "boar":
+                self.display_AI(choice, boar_art)
+                return 3
+            else:
+                self.invalid_choice()
 
     def display_AI(self, choice, art):
         """Print selected AI."""
@@ -176,21 +177,20 @@ class Ui(cmd.Cmd):
     def do_rules(self, argv):
         """Display game rules."""
         print(
-            """Each turn, a player repeatedly rolls a die until either """
-            """a 1 is rolled or the player decides to "hold":"""
+            "Each turn, a player repeatedly rolls a die until either "
+            'a 1 is rolled or the player decides to "hold":'
         )
         print(
-            """\u2022If the player rolls a 1, """
-            """they score nothing and it becomes the next player's turn."""
+            "\u2022If the player rolls a 1, "
+            "they score nothing and it becomes the next player's turn."
         )
         print(
-            """\u2022If the player rolls any other number, it is """
-            """added to their turn total and the player's turn continues."""
+            "\u2022If the player rolls any other number, it is "
+            "added to their turn total and the player's turn continues."
         )
         print(
             '\u2022If a player chooses to "hold", their turn total is added '
-            ""
-            """to their score, and it becomes the next player\'s turn."""
+            "to their score, and it becomes the next player's turn."
         )
         print("The first player to score 100 or more points wins.")
 
