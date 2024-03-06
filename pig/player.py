@@ -28,4 +28,3 @@ class Player:
                 return False
             else:
                 print("Please enter valid choice: 'yes' or 'no'")
-
