@@ -1,15 +1,10 @@
 """Unit testing."""
-
 import unittest
-<<<<<<< HEAD
-=======
 from pig import score_board
 from pig import game
 from pig import player
 from pig import ai
->>>>>>> f123c2d62c7911b4e4fecc6c6ba2902541868570
 from pig import ui
-from pig import score_board
 from unittest import mock
 from unittest.mock import patch
 from io import StringIO
@@ -56,61 +51,6 @@ class test_ui(unittest.TestCase):
         self.assertTrue(ui1.completekey == "tab")
         self.assertIsInstance(ui1.high_score, score_board.ScoreBoard)
 
-<<<<<<< HEAD
-
-    def test_changename_success(self):
-        """Check if change name works with correct input"""
-        ui1 = ui.Ui()
-        
-        ui1.high_score._up_date_game_played("Marta")
-        with mock.patch("builtins.input", side_effect=["Marta", "Sven"]):
-            ui1.do_changename()
-
-            self.assertNotIn("Marta", ui1.high_score.players)
-            self.assertIn("Sven", ui1.high_score.players)
-
-    def test_changename_retry(self):
-        """Check if change name works with 1 retry and then correct input"""
-        ui1 = ui.Ui()
-        
-        ui1.high_score._up_date_game_played("ben")
-        ui1.high_score._up_date_game_played("Marta")
-        print("test")
-        
-        with mock.patch("builtins.input", side_effect=["Marta", "ben", "yes", "Sven"]):
-            ui1.do_changename()
-
-            self.assertNotIn("Marta", ui1.high_score.players)
-            self.assertIn("Sven", ui1.high_score.players)
-
-    def test_changename_wrong_no_retry(self):
-        """Check if change name works with 1 retry and then correct input"""
-        ui1 = ui.Ui()
-        
-        ui1.high_score._up_date_game_played("ben")
-        ui1.high_score._up_date_game_played("Marta")
-        print("test")
-        
-        with mock.patch("builtins.input", side_effect=["Marta", "ben", "no"]):
-            ui1.do_changename()
-
-            self.assertIn("Marta", ui1.high_score.players)
-            self.assertNotIn("Sven", ui1.high_score.players)
-        
-    def test_changename_invalid(self):
-        """Check when new name is invalid"""
-        ui1 = ui.Ui()
-        
-
-        ui1.high_score._up_date_game_played("Marta")
-
-        with mock.patch("builtins.input", side_effect=["Marta", "pig", "sven"]):
-            ui1.do_changename()
-            self.assertNotIn("pig", ui1.high_score.players)
-
-
-=======
-    # DONE
     def test_init__(self):
 
         print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
@@ -479,4 +419,3 @@ class test_ui(unittest.TestCase):
         ui_obj = ui.Ui()
         ui_obj.do_oink(None)
         mock_graph.assert_called_once()
->>>>>>> f123c2d62c7911b4e4fecc6c6ba2902541868570

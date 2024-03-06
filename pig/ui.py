@@ -1,7 +1,7 @@
 """Module that defines the UI class."""
 
 import cmd
-import player
+from pig import player
 from pig import game
 from pig.histogram import graph
 from pig import ai
@@ -18,7 +18,7 @@ pig_art = """              _
          `-._,        /
             )-)_/--( >  jv
            ''''  ''''
-"""
+                    """
 boar_art = """                                               __
              ____               ________     ,',.`.
            \\`''-.`-._..--...-'''        ```--':_ ) )
@@ -225,4 +225,3 @@ class Ui(cmd.Cmd):
     do_Board = do_board
     do_ChangeName = do_changename
     do_Rules = do_rules
->>>>>>> f123c2d62c7911b4e4fecc6c6ba2902541868570
