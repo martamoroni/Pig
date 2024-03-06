@@ -49,9 +49,9 @@ class Ui(cmd.Cmd):
         self.cmdqueue = []
         self.high_score = score_board.ScoreBoard()
 
-        self.do_menu("")
+        self.do_menu()
 
-    def do_menu(self, argv):
+    def do_menu(self):
         """Print menu."""
         print("\n----- MENU -----")
         print("\u2022Start")
@@ -60,13 +60,13 @@ class Ui(cmd.Cmd):
         print("\u2022Rules")
         print("\u2022Exit\n")
 
-    def do_board(self, argv):
+    def do_board(self, _):
         """Print board."""
         print(self.high_score)
 
         self.do_menu()
 
-    def do_changename(self, argv):
+    def do_changename(self, _):
         """Change name of a player."""
         old_name = input("Enter current name: ")
         done = False
@@ -89,7 +89,7 @@ class Ui(cmd.Cmd):
 
         self.do_menu()
 
-    def do_start(self, argv):
+    def do_start(self, _):
         """Select game type and start new game."""
         player1, player2 = self.set_game_type()
 
@@ -174,7 +174,7 @@ class Ui(cmd.Cmd):
         print("\u2022Pig")
         print("\u2022Boar")
 
-    def do_rules(self, argv):
+    def do_rules(self, _):
         """Display game rules."""
         print(
             "Each turn, a player repeatedly rolls a die until either "
@@ -200,7 +200,7 @@ class Ui(cmd.Cmd):
         """Print message for invalid choice."""
         print("Please enter valid choice")
 
-    def do_quit(self, argv):
+    def do_quit(self, _):
         """Exit the program."""
         self.high_score.save_scores()
         return True

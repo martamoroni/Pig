@@ -30,11 +30,11 @@
 <pre><code class="python">&#34;&#34;&#34;Module that defines the UI class.&#34;&#34;&#34;
 
 import cmd
-import player
-import ai
-import game
-import score_board
-from histogram import graph
+from pig import player
+from pig import game
+from pig.histogram import graph
+from pig import ai
+from pig import score_board
 
 piglet_art = &#34;&#34;&#34;
       ,,__
@@ -47,7 +47,7 @@ pig_art = &#34;&#34;&#34;              _
          `-._,        /
             )-)_/--( &gt;  jv
            &#39;&#39;&#39;&#39;  &#39;&#39;&#39;&#39;
-&#34;&#34;&#34;
+                    &#34;&#34;&#34;
 boar_art = &#34;&#34;&#34;                                               __
              ____               ________     ,&#39;,.`.
            \\`&#39;&#39;-.`-._..--...-&#39;&#39;&#39;        ```--&#39;:_ ) )
@@ -84,19 +84,18 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Print menu.&#34;&#34;&#34;
         print(&#34;\n----- MENU -----&#34;)
         print(&#34;\u2022Start&#34;)
-        # print(&#34;2. Continue game&#34;)     # Might implement later
         print(&#34;\u2022Board&#34;)
         print(&#34;\u2022ChangeName&#34;)
-        print(&#34;\u2022Rules&#34;)  # Have to change a bit
+        print(&#34;\u2022Rules&#34;)
         print(&#34;\u2022Exit\n&#34;)
 
-    def do_board(self, argv):
+    def do_board(self, _):
         &#34;&#34;&#34;Print board.&#34;&#34;&#34;
         print(self.high_score)
 
         self.do_menu()
 
-    def do_changename(self, argv):
+    def do_changename(self, _):
         &#34;&#34;&#34;Change name of a player.&#34;&#34;&#34;
         old_name = input(&#34;Enter current name: &#34;)
         done = False
@@ -119,7 +118,7 @@ class Ui(cmd.Cmd):
 
         self.do_menu()
 
-    def do_start(self, argv):
+    def do_start(self, _):
         &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
         player1, player2 = self.set_game_type()
 
@@ -133,34 +132,39 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Select game type, return players in new game.&#34;&#34;&#34;
         self.display_game_types()
 
-        valid_choice = False
-
-        while not valid_choice:
+        while True:
             choice = input(&#34;Select game: &#34;).lower()
 
-            match choice:
-                case &#34;1&#34;:
-                    name1 = input(&#34;\nName player 1: &#34;)
-                    name2 = input(&#34;Name player 2: &#34;)
+            if choice == &#34;1&#34;:
+                self.select_vs_player()
+            elif choice == &#34;2&#34;:
+                self.select_vs_Ai()
+            else:
+                self.invalid_choice()
 
-                    if (
-                        self.is_valid_name(name1)
-                        and self.is_valid_name(name2)
-                        and name1 != name2
-                    ):
-                        return player.Player(name1), player.Player(name2)
-                    else:
-                        print(&#34;Invalid name&#34;)
-                case &#34;2&#34;:
-                    name1 = input(&#34;\nName player 1: &#34;)
+    def select_vs_player(self):
+        name1 = input(&#34;\nName player 1: &#34;)
+        name2 = input(&#34;Name player 2: &#34;)
 
-                    if self.is_valid_name(name1):
-                        difficulty = self.set_difficulty()
-                        return player.Player(name1), ai.Ai(difficulty)
-                    else:
-                        print(&#34;Invalid name&#34;)
-                case _:
-                    self.invalid_choice()
+        if (
+            self.is_valid_name(name1)
+            and self.is_valid_name(name2)
+            and name1 != name2
+        ):
+            return player.Player(name1), player.Player(name2)
+        else:
+            print(&#34;Invalid name&#34;)
+            self.select_vs_player()
+
+    def select_vs_Ai(self):
+        name1 = input(&#34;\nName player 1: &#34;)
+
+        if self.is_valid_name(name1):
+            difficulty = self.set_difficulty()
+            return player.Player(name1), ai.Ai(difficulty)
+        else:
+            print(&#34;Invalid name&#34;)
+            self.select_vs_Ai()
 
     def display_game_types(self):
         &#34;&#34;&#34;Print game types menu.&#34;&#34;&#34;
@@ -172,24 +176,20 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Return selected difficulty for AI.&#34;&#34;&#34;
         self.display_difficulties()
 
-        valid_choice = False
-
-        while not valid_choice:
+        while True:
             choice = input(&#34;Select difficulty: &#34;).lower()
 
-            match choice:
-                case &#34;piglet&#34;:
-                    self.display_AI(choice, piglet_art)
-                    return 1
-                case &#34;pig&#34;:
-                    self.display_AI(choice, pig_art)
-                    return 2
-                case &#34;boar&#34;:
-                    self.display_AI(choice, boar_art)
-                    return 3
-                case _:
-                    print(&#34;\033[A                             \033[A&#34;)
-                    self.invalid_choice()
+            if choice == &#34;piglet&#34;:
+                self.display_AI(choice, piglet_art)
+                return 1
+            elif choice == &#34;pig&#34;:
+                self.display_AI(choice, pig_art)
+                return 2
+            elif choice == &#34;boar&#34;:
+                self.display_AI(choice, boar_art)
+                return 3
+            else:
+                self.invalid_choice()
 
     def display_AI(self, choice, art):
         &#34;&#34;&#34;Print selected AI.&#34;&#34;&#34;
@@ -203,24 +203,23 @@ class Ui(cmd.Cmd):
         print(&#34;\u2022Pig&#34;)
         print(&#34;\u2022Boar&#34;)
 
-    def do_rules(self, argv):
+    def do_rules(self, _):
         &#34;&#34;&#34;Display game rules.&#34;&#34;&#34;
         print(
-            &#34;&#34;&#34;Each turn, a player repeatedly rolls a die until either &#34;&#34;&#34;
-            &#34;&#34;&#34;a 1 is rolled or the player decides to &#34;hold&#34;:&#34;&#34;&#34;
+            &#34;Each turn, a player repeatedly rolls a die until either &#34;
+            &#39;a 1 is rolled or the player decides to &#34;hold&#34;:&#39;
         )
         print(
-            &#34;&#34;&#34;\u2022If the player rolls a 1, &#34;&#34;&#34;
-            &#34;&#34;&#34;they score nothing and it becomes the next player&#39;s turn.&#34;&#34;&#34;
+            &#34;\u2022If the player rolls a 1, &#34;
+            &#34;they score nothing and it becomes the next player&#39;s turn.&#34;
         )
         print(
-            &#34;&#34;&#34;\u2022If the player rolls any other number, it is &#34;&#34;&#34;
-            &#34;&#34;&#34;added to their turn total and the player&#39;s turn continues.&#34;&#34;&#34;
+            &#34;\u2022If the player rolls any other number, it is &#34;
+            &#34;added to their turn total and the player&#39;s turn continues.&#34;
         )
         print(
             &#39;\u2022If a player chooses to &#34;hold&#34;, their turn total is added &#39;
-            &#34;&#34;
-            &#34;&#34;&#34;to their score, and it becomes the next player\&#39;s turn.&#34;&#34;&#34;
+            &#34;to their score, and it becomes the next player&#39;s turn.&#34;
         )
         print(&#34;The first player to score 100 or more points wins.&#34;)
 
@@ -230,7 +229,7 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Print message for invalid choice.&#34;&#34;&#34;
         print(&#34;Please enter valid choice&#34;)
 
-    def do_quit(self, argv):
+    def do_quit(self, _):
         &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
         self.high_score.save_scores()
         return True
@@ -293,19 +292,18 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Print menu.&#34;&#34;&#34;
         print(&#34;\n----- MENU -----&#34;)
         print(&#34;\u2022Start&#34;)
-        # print(&#34;2. Continue game&#34;)     # Might implement later
         print(&#34;\u2022Board&#34;)
         print(&#34;\u2022ChangeName&#34;)
-        print(&#34;\u2022Rules&#34;)  # Have to change a bit
+        print(&#34;\u2022Rules&#34;)
         print(&#34;\u2022Exit\n&#34;)
 
-    def do_board(self, argv):
+    def do_board(self, _):
         &#34;&#34;&#34;Print board.&#34;&#34;&#34;
         print(self.high_score)
 
         self.do_menu()
 
-    def do_changename(self, argv):
+    def do_changename(self, _):
         &#34;&#34;&#34;Change name of a player.&#34;&#34;&#34;
         old_name = input(&#34;Enter current name: &#34;)
         done = False
@@ -328,7 +326,7 @@ class Ui(cmd.Cmd):
 
         self.do_menu()
 
-    def do_start(self, argv):
+    def do_start(self, _):
         &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
         player1, player2 = self.set_game_type()
 
@@ -342,34 +340,39 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Select game type, return players in new game.&#34;&#34;&#34;
         self.display_game_types()
 
-        valid_choice = False
-
-        while not valid_choice:
+        while True:
             choice = input(&#34;Select game: &#34;).lower()
 
-            match choice:
-                case &#34;1&#34;:
-                    name1 = input(&#34;\nName player 1: &#34;)
-                    name2 = input(&#34;Name player 2: &#34;)
+            if choice == &#34;1&#34;:
+                self.select_vs_player()
+            elif choice == &#34;2&#34;:
+                self.select_vs_Ai()
+            else:
+                self.invalid_choice()
 
-                    if (
-                        self.is_valid_name(name1)
-                        and self.is_valid_name(name2)
-                        and name1 != name2
-                    ):
-                        return player.Player(name1), player.Player(name2)
-                    else:
-                        print(&#34;Invalid name&#34;)
-                case &#34;2&#34;:
-                    name1 = input(&#34;\nName player 1: &#34;)
+    def select_vs_player(self):
+        name1 = input(&#34;\nName player 1: &#34;)
+        name2 = input(&#34;Name player 2: &#34;)
 
-                    if self.is_valid_name(name1):
-                        difficulty = self.set_difficulty()
-                        return player.Player(name1), ai.Ai(difficulty)
-                    else:
-                        print(&#34;Invalid name&#34;)
-                case _:
-                    self.invalid_choice()
+        if (
+            self.is_valid_name(name1)
+            and self.is_valid_name(name2)
+            and name1 != name2
+        ):
+            return player.Player(name1), player.Player(name2)
+        else:
+            print(&#34;Invalid name&#34;)
+            self.select_vs_player()
+
+    def select_vs_Ai(self):
+        name1 = input(&#34;\nName player 1: &#34;)
+
+        if self.is_valid_name(name1):
+            difficulty = self.set_difficulty()
+            return player.Player(name1), ai.Ai(difficulty)
+        else:
+            print(&#34;Invalid name&#34;)
+            self.select_vs_Ai()
 
     def display_game_types(self):
         &#34;&#34;&#34;Print game types menu.&#34;&#34;&#34;
@@ -381,24 +384,20 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Return selected difficulty for AI.&#34;&#34;&#34;
         self.display_difficulties()
 
-        valid_choice = False
-
-        while not valid_choice:
+        while True:
             choice = input(&#34;Select difficulty: &#34;).lower()
 
-            match choice:
-                case &#34;piglet&#34;:
-                    self.display_AI(choice, piglet_art)
-                    return 1
-                case &#34;pig&#34;:
-                    self.display_AI(choice, pig_art)
-                    return 2
-                case &#34;boar&#34;:
-                    self.display_AI(choice, boar_art)
-                    return 3
-                case _:
-                    print(&#34;\033[A                             \033[A&#34;)
-                    self.invalid_choice()
+            if choice == &#34;piglet&#34;:
+                self.display_AI(choice, piglet_art)
+                return 1
+            elif choice == &#34;pig&#34;:
+                self.display_AI(choice, pig_art)
+                return 2
+            elif choice == &#34;boar&#34;:
+                self.display_AI(choice, boar_art)
+                return 3
+            else:
+                self.invalid_choice()
 
     def display_AI(self, choice, art):
         &#34;&#34;&#34;Print selected AI.&#34;&#34;&#34;
@@ -412,24 +411,23 @@ class Ui(cmd.Cmd):
         print(&#34;\u2022Pig&#34;)
         print(&#34;\u2022Boar&#34;)
 
-    def do_rules(self, argv):
+    def do_rules(self, _):
         &#34;&#34;&#34;Display game rules.&#34;&#34;&#34;
         print(
-            &#34;&#34;&#34;Each turn, a player repeatedly rolls a die until either &#34;&#34;&#34;
-            &#34;&#34;&#34;a 1 is rolled or the player decides to &#34;hold&#34;:&#34;&#34;&#34;
+            &#34;Each turn, a player repeatedly rolls a die until either &#34;
+            &#39;a 1 is rolled or the player decides to &#34;hold&#34;:&#39;
         )
         print(
-            &#34;&#34;&#34;\u2022If the player rolls a 1, &#34;&#34;&#34;
-            &#34;&#34;&#34;they score nothing and it becomes the next player&#39;s turn.&#34;&#34;&#34;
+            &#34;\u2022If the player rolls a 1, &#34;
+            &#34;they score nothing and it becomes the next player&#39;s turn.&#34;
         )
         print(
-            &#34;&#34;&#34;\u2022If the player rolls any other number, it is &#34;&#34;&#34;
-            &#34;&#34;&#34;added to their turn total and the player&#39;s turn continues.&#34;&#34;&#34;
+            &#34;\u2022If the player rolls any other number, it is &#34;
+            &#34;added to their turn total and the player&#39;s turn continues.&#34;
         )
         print(
             &#39;\u2022If a player chooses to &#34;hold&#34;, their turn total is added &#39;
-            &#34;&#34;
-            &#34;&#34;&#34;to their score, and it becomes the next player\&#39;s turn.&#34;&#34;&#34;
+            &#34;to their score, and it becomes the next player&#39;s turn.&#34;
         )
         print(&#34;The first player to score 100 or more points wins.&#34;)
 
@@ -439,7 +437,7 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Print message for invalid choice.&#34;&#34;&#34;
         print(&#34;Please enter valid choice&#34;)
 
-    def do_quit(self, argv):
+    def do_quit(self, _):
         &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
         self.high_score.save_scores()
         return True
@@ -520,7 +518,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_Board"><code class="name flex">
-<span>def <span class="ident">do_Board</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Board</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Print board.</p></div>
@@ -528,7 +526,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_board(self, argv):
+<pre><code class="python">def do_board(self, _):
     &#34;&#34;&#34;Print board.&#34;&#34;&#34;
     print(self.high_score)
 
@@ -536,7 +534,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_ChangeName"><code class="name flex">
-<span>def <span class="ident">do_ChangeName</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_ChangeName</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Change name of a player.</p></div>
@@ -544,7 +542,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_changename(self, argv):
+<pre><code class="python">def do_changename(self, _):
     &#34;&#34;&#34;Change name of a player.&#34;&#34;&#34;
     old_name = input(&#34;Enter current name: &#34;)
     done = False
@@ -569,7 +567,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_Exit"><code class="name flex">
-<span>def <span class="ident">do_Exit</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Exit</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Exit the program.</p></div>
@@ -577,7 +575,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_quit(self, argv):
+<pre><code class="python">def do_quit(self, _):
     &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
     self.high_score.save_scores()
     return True</code></pre>
@@ -596,15 +594,14 @@ class Ui(cmd.Cmd):
     &#34;&#34;&#34;Print menu.&#34;&#34;&#34;
     print(&#34;\n----- MENU -----&#34;)
     print(&#34;\u2022Start&#34;)
-    # print(&#34;2. Continue game&#34;)     # Might implement later
     print(&#34;\u2022Board&#34;)
     print(&#34;\u2022ChangeName&#34;)
-    print(&#34;\u2022Rules&#34;)  # Have to change a bit
+    print(&#34;\u2022Rules&#34;)
     print(&#34;\u2022Exit\n&#34;)</code></pre>
 </details>
 </dd>
 <dt id="ui.Ui.do_Quit"><code class="name flex">
-<span>def <span class="ident">do_Quit</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Quit</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Exit the program.</p></div>
@@ -612,14 +609,14 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_quit(self, argv):
+<pre><code class="python">def do_quit(self, _):
     &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
     self.high_score.save_scores()
     return True</code></pre>
 </details>
 </dd>
 <dt id="ui.Ui.do_Rules"><code class="name flex">
-<span>def <span class="ident">do_Rules</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Rules</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Display game rules.</p></div>
@@ -627,24 +624,23 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_rules(self, argv):
+<pre><code class="python">def do_rules(self, _):
     &#34;&#34;&#34;Display game rules.&#34;&#34;&#34;
     print(
-        &#34;&#34;&#34;Each turn, a player repeatedly rolls a die until either &#34;&#34;&#34;
-        &#34;&#34;&#34;a 1 is rolled or the player decides to &#34;hold&#34;:&#34;&#34;&#34;
+        &#34;Each turn, a player repeatedly rolls a die until either &#34;
+        &#39;a 1 is rolled or the player decides to &#34;hold&#34;:&#39;
     )
     print(
-        &#34;&#34;&#34;\u2022If the player rolls a 1, &#34;&#34;&#34;
-        &#34;&#34;&#34;they score nothing and it becomes the next player&#39;s turn.&#34;&#34;&#34;
+        &#34;\u2022If the player rolls a 1, &#34;
+        &#34;they score nothing and it becomes the next player&#39;s turn.&#34;
     )
     print(
-        &#34;&#34;&#34;\u2022If the player rolls any other number, it is &#34;&#34;&#34;
-        &#34;&#34;&#34;added to their turn total and the player&#39;s turn continues.&#34;&#34;&#34;
+        &#34;\u2022If the player rolls any other number, it is &#34;
+        &#34;added to their turn total and the player&#39;s turn continues.&#34;
     )
     print(
         &#39;\u2022If a player chooses to &#34;hold&#34;, their turn total is added &#39;
-        &#34;&#34;
-        &#34;&#34;&#34;to their score, and it becomes the next player\&#39;s turn.&#34;&#34;&#34;
+        &#34;to their score, and it becomes the next player&#39;s turn.&#34;
     )
     print(&#34;The first player to score 100 or more points wins.&#34;)
 
@@ -652,7 +648,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_Start"><code class="name flex">
-<span>def <span class="ident">do_Start</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Start</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Select game type and start new game.</p></div>
@@ -660,7 +656,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_start(self, argv):
+<pre><code class="python">def do_start(self, _):
     &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
     player1, player2 = self.set_game_type()
 
@@ -672,7 +668,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_board"><code class="name flex">
-<span>def <span class="ident">do_board</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_board</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Print board.</p></div>
@@ -680,7 +676,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_board(self, argv):
+<pre><code class="python">def do_board(self, _):
     &#34;&#34;&#34;Print board.&#34;&#34;&#34;
     print(self.high_score)
 
@@ -688,7 +684,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_changename"><code class="name flex">
-<span>def <span class="ident">do_changename</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_changename</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Change name of a player.</p></div>
@@ -696,7 +692,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_changename(self, argv):
+<pre><code class="python">def do_changename(self, _):
     &#34;&#34;&#34;Change name of a player.&#34;&#34;&#34;
     old_name = input(&#34;Enter current name: &#34;)
     done = False
@@ -721,7 +717,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_exit"><code class="name flex">
-<span>def <span class="ident">do_exit</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_exit</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Exit the program.</p></div>
@@ -729,7 +725,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_quit(self, argv):
+<pre><code class="python">def do_quit(self, _):
     &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
     self.high_score.save_scores()
     return True</code></pre>
@@ -748,10 +744,9 @@ class Ui(cmd.Cmd):
     &#34;&#34;&#34;Print menu.&#34;&#34;&#34;
     print(&#34;\n----- MENU -----&#34;)
     print(&#34;\u2022Start&#34;)
-    # print(&#34;2. Continue game&#34;)     # Might implement later
     print(&#34;\u2022Board&#34;)
     print(&#34;\u2022ChangeName&#34;)
-    print(&#34;\u2022Rules&#34;)  # Have to change a bit
+    print(&#34;\u2022Rules&#34;)
     print(&#34;\u2022Exit\n&#34;)</code></pre>
 </details>
 </dd>
@@ -770,7 +765,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_quit"><code class="name flex">
-<span>def <span class="ident">do_quit</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_quit</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Exit the program.</p></div>
@@ -778,14 +773,14 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_quit(self, argv):
+<pre><code class="python">def do_quit(self, _):
     &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
     self.high_score.save_scores()
     return True</code></pre>
 </details>
 </dd>
 <dt id="ui.Ui.do_rules"><code class="name flex">
-<span>def <span class="ident">do_rules</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_rules</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Display game rules.</p></div>
@@ -793,24 +788,23 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_rules(self, argv):
+<pre><code class="python">def do_rules(self, _):
     &#34;&#34;&#34;Display game rules.&#34;&#34;&#34;
     print(
-        &#34;&#34;&#34;Each turn, a player repeatedly rolls a die until either &#34;&#34;&#34;
-        &#34;&#34;&#34;a 1 is rolled or the player decides to &#34;hold&#34;:&#34;&#34;&#34;
+        &#34;Each turn, a player repeatedly rolls a die until either &#34;
+        &#39;a 1 is rolled or the player decides to &#34;hold&#34;:&#39;
     )
     print(
-        &#34;&#34;&#34;\u2022If the player rolls a 1, &#34;&#34;&#34;
-        &#34;&#34;&#34;they score nothing and it becomes the next player&#39;s turn.&#34;&#34;&#34;
+        &#34;\u2022If the player rolls a 1, &#34;
+        &#34;they score nothing and it becomes the next player&#39;s turn.&#34;
     )
     print(
-        &#34;&#34;&#34;\u2022If the player rolls any other number, it is &#34;&#34;&#34;
-        &#34;&#34;&#34;added to their turn total and the player&#39;s turn continues.&#34;&#34;&#34;
+        &#34;\u2022If the player rolls any other number, it is &#34;
+        &#34;added to their turn total and the player&#39;s turn continues.&#34;
     )
     print(
         &#39;\u2022If a player chooses to &#34;hold&#34;, their turn total is added &#39;
-        &#34;&#34;
-        &#34;&#34;&#34;to their score, and it becomes the next player\&#39;s turn.&#34;&#34;&#34;
+        &#34;to their score, and it becomes the next player&#39;s turn.&#34;
     )
     print(&#34;The first player to score 100 or more points wins.&#34;)
 
@@ -818,7 +812,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_start"><code class="name flex">
-<span>def <span class="ident">do_start</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_start</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Select game type and start new game.</p></div>
@@ -826,7 +820,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_start(self, argv):
+<pre><code class="python">def do_start(self, _):
     &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
     player1, player2 = self.set_game_type()
 
@@ -868,6 +862,50 @@ class Ui(cmd.Cmd):
     return True</code></pre>
 </details>
 </dd>
+<dt id="ui.Ui.select_vs_Ai"><code class="name flex">
+<span>def <span class="ident">select_vs_Ai</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def select_vs_Ai(self):
+    name1 = input(&#34;\nName player 1: &#34;)
+
+    if self.is_valid_name(name1):
+        difficulty = self.set_difficulty()
+        return player.Player(name1), ai.Ai(difficulty)
+    else:
+        print(&#34;Invalid name&#34;)
+        self.select_vs_Ai()</code></pre>
+</details>
+</dd>
+<dt id="ui.Ui.select_vs_player"><code class="name flex">
+<span>def <span class="ident">select_vs_player</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def select_vs_player(self):
+    name1 = input(&#34;\nName player 1: &#34;)
+    name2 = input(&#34;Name player 2: &#34;)
+
+    if (
+        self.is_valid_name(name1)
+        and self.is_valid_name(name2)
+        and name1 != name2
+    ):
+        return player.Player(name1), player.Player(name2)
+    else:
+        print(&#34;Invalid name&#34;)
+        self.select_vs_player()</code></pre>
+</details>
+</dd>
 <dt id="ui.Ui.set_difficulty"><code class="name flex">
 <span>def <span class="ident">set_difficulty</span></span>(<span>self)</span>
 </code></dt>
@@ -881,24 +919,20 @@ class Ui(cmd.Cmd):
     &#34;&#34;&#34;Return selected difficulty for AI.&#34;&#34;&#34;
     self.display_difficulties()
 
-    valid_choice = False
-
-    while not valid_choice:
+    while True:
         choice = input(&#34;Select difficulty: &#34;).lower()
 
-        match choice:
-            case &#34;piglet&#34;:
-                self.display_AI(choice, piglet_art)
-                return 1
-            case &#34;pig&#34;:
-                self.display_AI(choice, pig_art)
-                return 2
-            case &#34;boar&#34;:
-                self.display_AI(choice, boar_art)
-                return 3
-            case _:
-                print(&#34;\033[A                             \033[A&#34;)
-                self.invalid_choice()</code></pre>
+        if choice == &#34;piglet&#34;:
+            self.display_AI(choice, piglet_art)
+            return 1
+        elif choice == &#34;pig&#34;:
+            self.display_AI(choice, pig_art)
+            return 2
+        elif choice == &#34;boar&#34;:
+            self.display_AI(choice, boar_art)
+            return 3
+        else:
+            self.invalid_choice()</code></pre>
 </details>
 </dd>
 <dt id="ui.Ui.set_game_type"><code class="name flex">
@@ -914,34 +948,15 @@ class Ui(cmd.Cmd):
     &#34;&#34;&#34;Select game type, return players in new game.&#34;&#34;&#34;
     self.display_game_types()
 
-    valid_choice = False
-
-    while not valid_choice:
+    while True:
         choice = input(&#34;Select game: &#34;).lower()
 
-        match choice:
-            case &#34;1&#34;:
-                name1 = input(&#34;\nName player 1: &#34;)
-                name2 = input(&#34;Name player 2: &#34;)
-
-                if (
-                    self.is_valid_name(name1)
-                    and self.is_valid_name(name2)
-                    and name1 != name2
-                ):
-                    return player.Player(name1), player.Player(name2)
-                else:
-                    print(&#34;Invalid name&#34;)
-            case &#34;2&#34;:
-                name1 = input(&#34;\nName player 1: &#34;)
-
-                if self.is_valid_name(name1):
-                    difficulty = self.set_difficulty()
-                    return player.Player(name1), ai.Ai(difficulty)
-                else:
-                    print(&#34;Invalid name&#34;)
-            case _:
-                self.invalid_choice()</code></pre>
+        if choice == &#34;1&#34;:
+            self.select_vs_player()
+        elif choice == &#34;2&#34;:
+            self.select_vs_Ai()
+        else:
+            self.invalid_choice()</code></pre>
 </details>
 </dd>
 </dl>
@@ -980,6 +995,8 @@ class Ui(cmd.Cmd):
 <li><code><a title="ui.Ui.do_start" href="#ui.Ui.do_start">do_start</a></code></li>
 <li><code><a title="ui.Ui.invalid_choice" href="#ui.Ui.invalid_choice">invalid_choice</a></code></li>
 <li><code><a title="ui.Ui.is_valid_name" href="#ui.Ui.is_valid_name">is_valid_name</a></code></li>
+<li><code><a title="ui.Ui.select_vs_Ai" href="#ui.Ui.select_vs_Ai">select_vs_Ai</a></code></li>
+<li><code><a title="ui.Ui.select_vs_player" href="#ui.Ui.select_vs_player">select_vs_player</a></code></li>
 <li><code><a title="ui.Ui.set_difficulty" href="#ui.Ui.set_difficulty">set_difficulty</a></code></li>
 <li><code><a title="ui.Ui.set_game_type" href="#ui.Ui.set_game_type">set_game_type</a></code></li>
 </ul>
