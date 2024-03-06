@@ -9,3 +9,4 @@ omit =
 	test_*.py
 	test/*
 	*/__init__.py
+	pig/histogram.py
