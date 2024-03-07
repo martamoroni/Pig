@@ -2,7 +2,7 @@
 import unittest
 from pig import score_board
 from pig import game
-from pig import player
+from pig import player 
 from pig import ai
 from pig import ui
 from unittest import mock
@@ -39,7 +39,6 @@ boar_art = """                                               __
                           `.  `.     ,'  ;'
                            /,_,'::. `-'`':SSt:.
 """
-
 
 class test_ui(unittest.TestCase):
     """Test Ui class."""

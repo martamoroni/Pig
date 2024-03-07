@@ -1,5 +1,7 @@
 PYTHON ?= python
 
+export PYTHONPATH := $(PWD)
+
 
 version:
 	@printf "Currently using executable: $(PYTHON)\n"

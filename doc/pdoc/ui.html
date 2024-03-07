@@ -89,13 +89,13 @@ class Ui(cmd.Cmd):
         print(&#34;\u2022Rules&#34;)
         print(&#34;\u2022Exit\n&#34;)
 
-    def do_board(self, argv):
+    def do_board(self, _):
         &#34;&#34;&#34;Print board.&#34;&#34;&#34;
         print(self.high_score)
 
         self.do_menu()
 
-    def do_changename(self, argv):
+    def do_changename(self, _):
         &#34;&#34;&#34;Change name of a player.&#34;&#34;&#34;
         old_name = input(&#34;Enter current name: &#34;)
         done = False
@@ -118,7 +118,7 @@ class Ui(cmd.Cmd):
 
         self.do_menu()
 
-    def do_start(self, argv):
+    def do_start(self, _):
         &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
         player1, player2 = self.set_game_type()
 
@@ -203,7 +203,7 @@ class Ui(cmd.Cmd):
         print(&#34;\u2022Pig&#34;)
         print(&#34;\u2022Boar&#34;)
 
-    def do_rules(self, argv):
+    def do_rules(self, _):
         &#34;&#34;&#34;Display game rules.&#34;&#34;&#34;
         print(
             &#34;Each turn, a player repeatedly rolls a die until either &#34;
@@ -229,7 +229,7 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Print message for invalid choice.&#34;&#34;&#34;
         print(&#34;Please enter valid choice&#34;)
 
-    def do_quit(self, argv):
+    def do_quit(self, _):
         &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
         self.high_score.save_scores()
         return True
@@ -297,13 +297,13 @@ class Ui(cmd.Cmd):
         print(&#34;\u2022Rules&#34;)
         print(&#34;\u2022Exit\n&#34;)
 
-    def do_board(self, argv):
+    def do_board(self, _):
         &#34;&#34;&#34;Print board.&#34;&#34;&#34;
         print(self.high_score)
 
         self.do_menu()
 
-    def do_changename(self, argv):
+    def do_changename(self, _):
         &#34;&#34;&#34;Change name of a player.&#34;&#34;&#34;
         old_name = input(&#34;Enter current name: &#34;)
         done = False
@@ -326,7 +326,7 @@ class Ui(cmd.Cmd):
 
         self.do_menu()
 
-    def do_start(self, argv):
+    def do_start(self, _):
         &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
         player1, player2 = self.set_game_type()
 
@@ -411,7 +411,7 @@ class Ui(cmd.Cmd):
         print(&#34;\u2022Pig&#34;)
         print(&#34;\u2022Boar&#34;)
 
-    def do_rules(self, argv):
+    def do_rules(self, _):
         &#34;&#34;&#34;Display game rules.&#34;&#34;&#34;
         print(
             &#34;Each turn, a player repeatedly rolls a die until either &#34;
@@ -437,7 +437,7 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Print message for invalid choice.&#34;&#34;&#34;
         print(&#34;Please enter valid choice&#34;)
 
-    def do_quit(self, argv):
+    def do_quit(self, _):
         &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
         self.high_score.save_scores()
         return True
@@ -518,7 +518,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_Board"><code class="name flex">
-<span>def <span class="ident">do_Board</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Board</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Print board.</p></div>
@@ -526,7 +526,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_board(self, argv):
+<pre><code class="python">def do_board(self, _):
     &#34;&#34;&#34;Print board.&#34;&#34;&#34;
     print(self.high_score)
 
@@ -534,7 +534,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_ChangeName"><code class="name flex">
-<span>def <span class="ident">do_ChangeName</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_ChangeName</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Change name of a player.</p></div>
@@ -542,7 +542,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_changename(self, argv):
+<pre><code class="python">def do_changename(self, _):
     &#34;&#34;&#34;Change name of a player.&#34;&#34;&#34;
     old_name = input(&#34;Enter current name: &#34;)
     done = False
@@ -567,7 +567,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_Exit"><code class="name flex">
-<span>def <span class="ident">do_Exit</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Exit</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Exit the program.</p></div>
@@ -575,7 +575,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_quit(self, argv):
+<pre><code class="python">def do_quit(self, _):
     &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
     self.high_score.save_scores()
     return True</code></pre>
@@ -601,7 +601,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_Quit"><code class="name flex">
-<span>def <span class="ident">do_Quit</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Quit</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Exit the program.</p></div>
@@ -609,14 +609,14 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_quit(self, argv):
+<pre><code class="python">def do_quit(self, _):
     &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
     self.high_score.save_scores()
     return True</code></pre>
 </details>
 </dd>
 <dt id="ui.Ui.do_Rules"><code class="name flex">
-<span>def <span class="ident">do_Rules</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Rules</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Display game rules.</p></div>
@@ -624,7 +624,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_rules(self, argv):
+<pre><code class="python">def do_rules(self, _):
     &#34;&#34;&#34;Display game rules.&#34;&#34;&#34;
     print(
         &#34;Each turn, a player repeatedly rolls a die until either &#34;
@@ -648,7 +648,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_Start"><code class="name flex">
-<span>def <span class="ident">do_Start</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_Start</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Select game type and start new game.</p></div>
@@ -656,7 +656,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_start(self, argv):
+<pre><code class="python">def do_start(self, _):
     &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
     player1, player2 = self.set_game_type()
 
@@ -668,7 +668,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_board"><code class="name flex">
-<span>def <span class="ident">do_board</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_board</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Print board.</p></div>
@@ -676,7 +676,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_board(self, argv):
+<pre><code class="python">def do_board(self, _):
     &#34;&#34;&#34;Print board.&#34;&#34;&#34;
     print(self.high_score)
 
@@ -684,7 +684,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_changename"><code class="name flex">
-<span>def <span class="ident">do_changename</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_changename</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Change name of a player.</p></div>
@@ -692,7 +692,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_changename(self, argv):
+<pre><code class="python">def do_changename(self, _):
     &#34;&#34;&#34;Change name of a player.&#34;&#34;&#34;
     old_name = input(&#34;Enter current name: &#34;)
     done = False
@@ -717,7 +717,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_exit"><code class="name flex">
-<span>def <span class="ident">do_exit</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_exit</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Exit the program.</p></div>
@@ -725,7 +725,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_quit(self, argv):
+<pre><code class="python">def do_quit(self, _):
     &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
     self.high_score.save_scores()
     return True</code></pre>
@@ -765,7 +765,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_quit"><code class="name flex">
-<span>def <span class="ident">do_quit</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_quit</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Exit the program.</p></div>
@@ -773,14 +773,14 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_quit(self, argv):
+<pre><code class="python">def do_quit(self, _):
     &#34;&#34;&#34;Exit the program.&#34;&#34;&#34;
     self.high_score.save_scores()
     return True</code></pre>
 </details>
 </dd>
 <dt id="ui.Ui.do_rules"><code class="name flex">
-<span>def <span class="ident">do_rules</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_rules</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Display game rules.</p></div>
@@ -788,7 +788,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_rules(self, argv):
+<pre><code class="python">def do_rules(self, _):
     &#34;&#34;&#34;Display game rules.&#34;&#34;&#34;
     print(
         &#34;Each turn, a player repeatedly rolls a die until either &#34;
@@ -812,7 +812,7 @@ class Ui(cmd.Cmd):
 </details>
 </dd>
 <dt id="ui.Ui.do_start"><code class="name flex">
-<span>def <span class="ident">do_start</span></span>(<span>self, argv)</span>
+<span>def <span class="ident">do_start</span></span>(<span>self, _)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Select game type and start new game.</p></div>
@@ -820,7 +820,7 @@ class Ui(cmd.Cmd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def do_start(self, argv):
+<pre><code class="python">def do_start(self, _):
     &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
     player1, player2 = self.set_game_type()
 
