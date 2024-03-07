@@ -49,22 +49,22 @@ class Ui(cmd.Cmd):
         self.cmdqueue = []
         self.high_score = score_board.ScoreBoard()
 
-        self.do_menu("")
+        self.do_menu(None)
 
     def do_menu(self, argv):
         """Print menu."""
-        print("\n----- MENU -----")
-        print("\u2022Start")
-        print("\u2022Board")
-        print("\u2022ChangeName")
-        print("\u2022Rules")
-        print("\u2022Exit\n")
+        print("\n----- MENU -----\n"
+              "\u2022Start\n"
+              "\u2022Board\n"
+              "\u2022ChangeName\n"
+              "\u2022Rules\n"
+              "\u2022Exit\n")
 
     def do_board(self, argv):
         """Print board."""
         print(self.high_score)
 
-        self.do_menu()
+        self.do_menu(None)
 
     def do_changename(self, argv):
         """Change name of a player."""
@@ -87,7 +87,7 @@ class Ui(cmd.Cmd):
             else:
                 print("Invalid name")
 
-        self.do_menu()
+        self.do_menu(None)
 
     def do_start(self, argv):
         """Select game type and start new game."""
@@ -107,9 +107,9 @@ class Ui(cmd.Cmd):
             choice = input("Select game: ").lower()
 
             if choice == "1":
-                self.select_vs_player()
+                return self.select_vs_player()
             elif choice == "2":
-                self.select_vs_Ai()
+                return self.select_vs_Ai()
             else:
                 self.invalid_choice()
 
@@ -117,15 +117,13 @@ class Ui(cmd.Cmd):
         name1 = input("\nName player 1: ")
         name2 = input("Name player 2: ")
 
-        if (
-            self.is_valid_name(name1)
+        if (self.is_valid_name(name1)
             and self.is_valid_name(name2)
-            and name1 != name2
-        ):
+            and name1 != name2):
             return player.Player(name1), player.Player(name2)
         else:
             print("Invalid name")
-            self.select_vs_player()
+            return self.select_vs_player()
 
     def select_vs_Ai(self):
         name1 = input("\nName player 1: ")
@@ -135,7 +133,7 @@ class Ui(cmd.Cmd):
             return player.Player(name1), ai.Ai(difficulty)
         else:
             print("Invalid name")
-            self.select_vs_Ai()
+            return self.select_vs_Ai()
 
     def display_game_types(self):
         """Print game types menu."""
@@ -194,7 +192,7 @@ class Ui(cmd.Cmd):
         )
         print("The first player to score 100 or more points wins.")
 
-        self.do_menu()
+        self.do_menu(None)
 
     def invalid_choice(self):
         """Print message for invalid choice."""
