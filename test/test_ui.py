@@ -52,7 +52,6 @@ class test_ui(unittest.TestCase):
 
     def test_init__(self):
 
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         ui_obj = ui.Ui()
 
         self.assertTrue(ui_obj.prompt == "(Game) > ")
@@ -110,25 +109,53 @@ class test_ui(unittest.TestCase):
             self.assertNotIn("Marta", ui_obj.high_score.players)
             self.assertIn("Sven", ui_obj.high_score.players)
 
-    # def test_changename_retry(self):
-    #     """Check if change name works with 1 retry and then correct input."""
-    #     ui_obj = ui.Ui()
+    def test_changename_retry(self):
 
-    #     with patch("builtins.input", side_effect=["Marta", "Sven", "yes", ]):
-    #         ui_obj.do_changename("")
+         """Check if change name works with 1 retry and then correct input."""
+         ui_obj = ui.Ui()
 
-    #         self.assertNotIn("Marta", ui_obj.high_score.players)
-    #         self.assertIn("Sven", ui_obj.high_score.players)
+         ui_obj.high_score._up_date_game_played("Marta") 
+         ui_obj.high_score._up_date_game_played("Sven") 
+         with patch("builtins.input", side_effect=["Marta", "Sven", "yes", "Ben" ]):
+             ui_obj.do_changename("")
 
-    # DONE
-    def test_changename_invalid(self):
+             self.assertNotIn("Marta", ui_obj.high_score.players)
+             self.assertIn("Ben", ui_obj.high_score.players)
+
+    def test_changename_no_retry(self):
+         """Check if change name works with 1 retry and then correct input."""
+         ui_obj = ui.Ui()
+
+         ui_obj.high_score._up_date_game_played("Marta") 
+         ui_obj.high_score._up_date_game_played("Sven") 
+         with patch("builtins.input", side_effect=["Marta", "Sven", "no" ]):
+             ui_obj.do_changename("")
+
+             self.assertIn("Marta", ui_obj.high_score.players)
+
+
+     # DONE
+    @patch("builtins.input", side_effect=["Marta", "pig", "Sven", "Sven"])      
+    def test_changename_invalid(self, mock_input):
         """Check when new name is invalid."""
         ui_obj = ui.Ui()
 
-        with patch("builtins.input", side_effects=["Marta", "Pig"]):
+        ui_obj.high_score._up_date_game_played("Marta") 
+        ui_obj.do_changename("")
+
+        self.assertNotIn("pig", ui_obj.high_score.players)        
+  
+
+    def test_changename_exist(self):
+        """Check when new name is invalid."""
+        ui_obj = ui.Ui()
+
+        ui_obj.high_score._up_date_game_played("test")
+        with patch("builtins.input", side_effects=["Marta", "test"]):
             ui_obj.do_changename("")
 
-            self.assertNotIn("Pig", ui_obj.high_score.players)
+            self.assertNotIn("pig", ui_obj.high_score.players)        
+
 
     # DONE
     def test_do_start(self):
@@ -219,7 +246,7 @@ class test_ui(unittest.TestCase):
         self.assertEqual(res[0].name, "Marta")
 
     # DONE
-    @patch("builtins.input", side_effect=["Marta", "invalid", "Marta", "piglet"])
+    @patch("builtins.input", side_effect=["pig","Marta","pig"])
     def test_select_vs_Ai_invalid(self, mock_input):
         ui_obj = ui.Ui()
         res = ui_obj.select_vs_Ai()
@@ -249,10 +276,34 @@ class test_ui(unittest.TestCase):
 
         self.assertEqual(printed_output, exp_output)
 
-    # TODO
-    @patch("builtins.input", side_effect="piglet")
-    def test_set_difficulty(self, mock_input):
-        pass
+    @patch("builtins.input", side_effect=["piglet"])
+    def test_set_difficulty_piglet(self, mock_input):
+        ui_obj = ui.Ui()
+        res = ui_obj.set_difficulty()
+        exp = 1
+        self.assertEqual(res, exp)
+
+    @patch("builtins.input", side_effect=["pig"])
+    def test_set_difficulty_pig(self, mock_input):
+        ui_obj = ui.Ui()
+        res = ui_obj.set_difficulty()
+        exp = 2
+        self.assertEqual(res, exp)
+
+    @patch("builtins.input", side_effect=["boar"])
+    def test_set_difficulty_boar(self, mock_input):
+        ui_obj = ui.Ui()
+        res = ui_obj.set_difficulty()
+        exp = 3
+        self.assertEqual(res, exp)
+
+    @patch("builtins.input", side_effect=["test","pig"])
+    def test_set_difficulty_invalid(self, mock_input):
+        ui_obj = ui.Ui()
+        res = ui_obj.set_difficulty()
+        exp = 2
+        self.assertEqual(res, exp)
+
 
     # DONE
     def test_display_AI(self):
@@ -402,10 +453,8 @@ class test_ui(unittest.TestCase):
         res = ui_obj.is_valid_name("piglet")
         self.assertFalse(res)
 
-    # TODO?
-    # @patch("pig.histogram.graph")
-    # def test_do_oink(self, mock_graph):
-    #     """Test if graph function is called once"""
-    #     ui_obj = ui.Ui()
-    #     ui_obj.do_oink(None)
-    #     mock_graph.assert_called_once()
+    @patch("pig.histogram.graph")
+    def test_do_oink(self, mock_graph):
+         """Test if graph function is called once"""
+         ui_obj = ui.Ui()
+         ui_obj.do_oink(None)

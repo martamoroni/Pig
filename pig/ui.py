@@ -49,7 +49,7 @@ class Ui(cmd.Cmd):
         self.cmdqueue = []
         self.high_score = score_board.ScoreBoard()
 
-        self.do_menu()
+        self.do_menu(None)
 
     def do_menu(self, _):
         """Print menu."""
