@@ -51,3 +51,12 @@ the game can either be started by executing the main file in the pig directory o
 make start
 ```
 Once in the game you can type help to see all available commands. If you have questions about the function of any command use help followes by the command in questions for an explanation.
+
+## Intelligence 
+The game implements 3 different levels of difficulty.
+
+The easiest difficulty functions using a random number generator where is has a 1 in 10 chance of holding instead of rolling.
+
+The medium difficulty uses the hold at 20 strategy that is 8% worse then optimal play.
+
+For the higest difficulty we used the optimal strategy. This strategy was obtained by extracting the 3D data from the model that can be found in this [Paper](https://cupola.gettysburg.edu/cgi/viewcontent.cgi?article=1003&context=csfac). This data was then converted into a dictionary dictionary and referenced in the program.
