@@ -23,22 +23,21 @@ With the terminal navigate to the location you want the game and execute this co
 git clone https://github.com/martamoroni/Pig.git
 ```
 
-Go into the Pig directory that was just created and start create the venv:
+Go into the Pig directory that was just created and create the venv:
 
 ```
 make venv
 ```
-start the venv with either 
+For Windows start the venv with:
 ```
 . .venv/Scripts/activate
 ```
-for windows or 
+For Unix and Macs start it with:
 ```
 .venv/bin/activate
 ```
-for Unix and Macs
 
-install the dependencies
+Install the dependencies:
 ```
 make install
 ```
@@ -46,7 +45,7 @@ make install
 
 ## Play the game
 
-the game can either be started by executing the main file in the pig directory or by executing:
+The game can either be started by executing the main file in the pig directory or by executing:
 ```
 make start
 ```
