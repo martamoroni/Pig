@@ -85,7 +85,6 @@ class test_ui(unittest.TestCase):
 
         self.assertEqual(printed_output, exp_output)
 
-    # DONE
     def test_do_board(self):
         """Check if board is printed and do_menu is called"""
         ui_obj = ui.Ui()
@@ -100,7 +99,6 @@ class test_ui(unittest.TestCase):
 
         self.assertIn("Name", printed_output)
 
-    # DONE
     def test_changename_success(self):
         """Check if change name works with correct input."""
         ui_obj = ui.Ui()
@@ -134,7 +132,6 @@ class test_ui(unittest.TestCase):
 
             self.assertIn("Marta", ui_obj.high_score.players)
 
-    # DONE
     @patch("builtins.input", side_effect=["Marta", "pig", "Sven", "Sven"])
     def test_changename_invalid(self, mock_input):
         """Check when new name is invalid."""
@@ -155,7 +152,6 @@ class test_ui(unittest.TestCase):
 
             self.assertNotIn("pig", ui_obj.high_score.players)
 
-    # DONE
     def test_do_start(self):
         """Check if do_start start game correctly and update scores"""
         player1 = mock.MagicMock()
@@ -179,19 +175,6 @@ class test_ui(unittest.TestCase):
 
         mock_Game.assert_called_once_with(player1, player2)
 
-    #    @patch("pig.ui.set_game_type")
-    #    @patch("pig.game.Game")
-    #    def test_do_start(self, mock_Game, mock_set_game_type):
-    #        """Check if do_start start game correctly and update scores"""
-    #        player1 = mock.MagicMock()
-    #        player2 = mock.MagicMock()
-    #        mock_game_instance = mock.MagicMock()
-    #        ui_obj = ui.Ui()
-    #
-    #        mock_set_game_type.return_value = (player1, player2)  # value that shoul be returned
-    #        mock_Game.return_value = mock_game_instance
-
-    # DONE
     @patch("builtins.input", side_effect=["1"])
     def test_set_game_type_vs_player(self, mock_input):
         ui_obj = ui.Ui()
@@ -200,7 +183,6 @@ class test_ui(unittest.TestCase):
             ui_obj.set_game_type()
             mock_select_vs_player.assert_called_once()
 
-    # DONE
     @patch("builtins.input", side_effect=["2"])
     def test_set_game_type_vs_Ai(self, mock_input):
         ui_obj = ui.Ui()
@@ -209,7 +191,6 @@ class test_ui(unittest.TestCase):
             ui_obj.set_game_type()
             mock_select_vs_ai.assert_called_once()
 
-    # DONE
     @patch("builtins.input", side_effect=["3", "2"])
     def test_set_game_type_invalid_choice(self, mock_invalid_choice):
         ui_obj = ui.Ui()
@@ -219,7 +200,6 @@ class test_ui(unittest.TestCase):
                 mock_select_vs_ai.assert_called_once()
                 mock_invalid_choice.assert_called_once()
 
-    # DONE
     @patch("builtins.input", side_effect=["Marta", "Sven"])
     def test_select_vs_player_valid(self, mock_input):
         ui_obj = ui.Ui()
@@ -227,7 +207,6 @@ class test_ui(unittest.TestCase):
         self.assertEqual(res[0].name, "Marta")
         self.assertEqual(res[1].name, "Sven")
 
-    # DONE
     @patch("builtins.input", side_effect=["Marta", "Marta", "Marta", "Sven"])
     def test_select_vs_player_invalid(self, mock_input):
         ui_obj = ui.Ui()
@@ -236,7 +215,6 @@ class test_ui(unittest.TestCase):
         self.assertEqual(res[0].name, "Marta")
         self.assertEqual(res[1].name, "Sven")
 
-    # DONE
     @patch("builtins.input", side_effect=["Marta", "piglet"])
     def test_select_vs_ai_valid(self, mock_input):
         ui_obj = ui.Ui()
@@ -246,7 +224,6 @@ class test_ui(unittest.TestCase):
         self.assertIsInstance(res[1], ai.Ai)
         self.assertEqual(res[0].name, "Marta")
 
-    # DONE
     @patch("builtins.input", side_effect=["pig", "Marta", "pig"])
     def test_select_vs_ai_invalid(self, mock_input):
         ui_obj = ui.Ui()
@@ -256,7 +233,6 @@ class test_ui(unittest.TestCase):
         self.assertIsInstance(res[1], ai.Ai)
         self.assertEqual(res[0].name, "Marta")
 
-    # DONE
     def test_display_game_types(self):
         """Check is output game types is correct."""
         ui_obj = ui.Ui()
@@ -305,7 +281,6 @@ class test_ui(unittest.TestCase):
         exp = 2
         self.assertEqual(res, exp)
 
-    # DONE
     def test_display_ai(self):
         """Check if AI shown is correct."""
         ui_obj = ui.Ui()
@@ -357,7 +332,6 @@ class test_ui(unittest.TestCase):
         # Restore sys.stdout
         sys.stdout = sys.__stdout__
 
-    # DONE
     def test_display_difficulties(self):
         """Check if AI difficulties menu is correct."""
         ui_obj = ui.Ui()
@@ -379,7 +353,6 @@ class test_ui(unittest.TestCase):
 
         self.assertEqual(printed_output, exp_output)
 
-    # DONE
     def test_do_rules(self):
         """Check if displayed rules are correct."""
         ui_obj = ui.Ui()
@@ -406,7 +379,6 @@ class test_ui(unittest.TestCase):
 
         self.assertIn(exp_output, printed_output)
 
-    # DONE
     def test_invalid_choice(self):
         """Check if message for invalid choice is correct."""
         ui_obj = ui.Ui()
@@ -425,7 +397,6 @@ class test_ui(unittest.TestCase):
 
         self.assertEqual(printed_output, exp_output)
 
-    # TODO
     def test_do_quit(self):
         """Test if True is returned when exiting the program and high_score.save_scores() is called."""
         ui_obj = ui.Ui()
@@ -439,14 +410,12 @@ class test_ui(unittest.TestCase):
 
         mock_high_score.save_scores.assert_called_once()
 
-    # DONE
     def test_is_valid_name_true(self):
         """Test when name is valid."""
         ui_obj = ui.Ui()
         res = ui_obj.is_valid_name("test_name")
         self.assertTrue(res)
 
-    # DONE
     def test_is_valid_name_false(self):
         """Test when name is invalid."""
         ui_obj = ui.Ui()

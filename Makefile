@@ -111,7 +111,7 @@ doc: pdoc pyreverse #pydoc #sphinx
 radon-cc:
 
 	@$(call MESSAGE,$@)
-	radon cc -show-complexity --average pig
+	radon cc --show-complexity --average pig
 
 radon-mi:
 

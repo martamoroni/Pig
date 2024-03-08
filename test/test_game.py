@@ -1,5 +1,3 @@
-"""Unit test."""
-
 import unittest
 from pig import game
 from pig import player
@@ -8,10 +6,8 @@ from unittest import mock
 
 
 class test_game(unittest.TestCase):
-    """Game test class"""
 
     def test_init(self):
-        """"""
         player1 = player.Player("test")
         player2 = player.Player("test2")
         game_obj = game.Game(player1, player2)
@@ -21,7 +17,6 @@ class test_game(unittest.TestCase):
         self.assertTrue(game_obj.current_score == 0)
 
     def test_is_game_over(self):
-        """"""
         player1 = player.Player("test")
         player2 = player.Player("test2")
         game_obj = game.Game(player1, player2)
@@ -31,7 +26,6 @@ class test_game(unittest.TestCase):
         self.assertFalse(game_obj.is_game_over())
 
     def test_end_turn(self):
-        """"""
         player1 = player.Player("test")
         player2 = player.Player("test2")
         game_obj = game.Game(player1, player2)
@@ -41,7 +35,6 @@ class test_game(unittest.TestCase):
         self.assertTrue(player1.points == 10)
 
     def test_change_player(self):
-        """"""
         player1 = player.Player("test")
         player2 = player.Player("test2")
         game_obj = game.Game(player1, player2)
@@ -49,7 +42,6 @@ class test_game(unittest.TestCase):
         self.assertTrue(game_obj.current_player == player2)
 
     def test_rolled_one_paused(self):
-        """"""
         player1 = player.Player("test")
         player2 = player.Player("test2")
         game_obj = game.Game(player1, player2)
@@ -59,7 +51,6 @@ class test_game(unittest.TestCase):
         self.assertFalse(game_obj.game_paused)
 
     def test_rolled_one_not_paused(self):
-        """"""
         player1 = player.Player("test")
         player2 = player.Player("test2")
         game_obj = game.Game(player1, player2)
@@ -69,7 +60,6 @@ class test_game(unittest.TestCase):
         self.assertTrue(game_obj.current_score == 6)
 
     def test_start_paused(self):
-        """"""
         player1 = player.Player("test")
         player2 = ai.Ai(2)
         game_obj = game.Game(player1, player2)
@@ -78,7 +68,6 @@ class test_game(unittest.TestCase):
             self.assertFalse(game_obj.start())
 
     def test_start_loop(self):
-        """"""
         player1 = ai.Ai(2)
         player2 = ai.Ai(2)
         game_obj = game.Game(player1, player2)
@@ -86,7 +75,6 @@ class test_game(unittest.TestCase):
         game_obj.ran.seed(14)
 
     def test_start_win(self):
-        """"""
         player1 = ai.Ai(2)
         player2 = ai.Ai(2)
         player1.points = 76
