@@ -55,11 +55,11 @@ class Ui(cmd.Cmd):
         """Print menu."""
         print(
             "\n----- MENU -----\n"
-            "\u2022Start\n"
-            "\u2022Board\n"
-            "\u2022ChangeName\n"
-            "\u2022Rules\n"
-            "\u2022Exit\n"
+            "- Start\n"
+            "- Board\n"
+            "- ChangeName\n"
+            "- Rules\n"
+            "- Exit\n"
         )
 
     def do_board(self, _):
@@ -167,29 +167,30 @@ class Ui(cmd.Cmd):
     def display_difficulties(self):
         """Print AI difficulties menu."""
         print("Choose AI difficulty:")
-        print("\u2022Piglet")
-        print("\u2022Pig")
-        print("\u2022Boar")
+        print("- Piglet")
+        print("- Pig")
+        print("- Boar")
 
     def do_rules(self, _):
         """Display game rules."""
         print(
-            "Each turn, a player repeatedly rolls a die until either "
-            'a 1 is rolled or the player decides to "hold":'
+            "Each turn, a player can choose to either roll a die or "
+            'to "hold":'
         )
         print(
-            "\u2022If the player rolls a 1, "
-            "they score nothing and it becomes the next player's turn."
+            "If a player decides to hold, the turn score is added to their "
+            "total score and it becomes the next player's turn."
         )
         print(
-            "\u2022If the player rolls any other number, it is "
-            "added to their turn total and the player's turn continues."
+            "If the player rolls 1, they score nothing "
+            "and it becomes the next player's turn."
         )
         print(
-            '\u2022If a player chooses to "hold", their turn total is added '
-            "to their score, and it becomes the next player's turn."
+            "If a player rolls any other number, that number is added to "
+            "their turn score and their turn continues.")
+        print(
+            "To win the game a player has to score 100 or more points"
         )
-        print("The first player to score 100 or more points wins.")
 
         self.do_menu(None)
 
