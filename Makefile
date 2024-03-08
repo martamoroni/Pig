@@ -93,7 +93,7 @@ pydoc:
 pdoc:
 	
 	@$(call MESSAGE,$@)
-	pdoc --force --html --output-dir doc/pdoc pig/*.py
+	pdoc --force --html --output-dir doc/api pig/*.py
 
 
 pyreverse:
