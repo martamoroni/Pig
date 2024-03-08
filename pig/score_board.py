@@ -32,7 +32,7 @@ class ScoreBoard:
             score = self.players[o_name]
             self.players[n_name] = score
             del self.players[o_name]
-        except e:
+        except Exception:
             print("old name does not exist")
 
     def name_exists(self, name):
