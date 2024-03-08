@@ -32,9 +32,8 @@ class ScoreBoard:
             score = self.players[o_name]
             self.players[n_name] = score
             del self.players[o_name]
-        except:
+        except e:
             print("old name does not exist")
-            pass
 
     def name_exists(self, name):
         """Test if name is in the score boared."""
