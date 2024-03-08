@@ -16,6 +16,7 @@ class test_score_board(unittest.TestCase):
         board = score_board.ScoreBoard()
         p1 = ai.Ai(1)
         p2 = ai.Ai(2)
+        board.players = board._load_scores("")
         game_obj = game.Game(p1, p2)
         board.up_date_score(game_obj)
         self.assertTrue(1 == board.players[game_obj.player1.name]["played"])

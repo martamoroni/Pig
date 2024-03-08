@@ -48,7 +48,6 @@ class Game:
     def is_game_over(self) -> bool:
         """Check if current player has more then 100 points."""
         if self.current_player.points >= 100:
-            print(f"{self.current_player.name} won this game")
             return True
         return False
 

@@ -338,8 +338,7 @@ class test_ui(unittest.TestCase):
 
     def test_do_rules(self):
         ui_obj = ui.Ui()
-        exp_output = """Each turn, a player can choose to either roll a die or 
-        to "hold": 
+        exp_output = """Each turn, a player can choose to either roll a die or hold: 
         If a player decides to hold, the turn score is added to their 
         total score and it becomes the next player's turn. 
         If the player rolls 1, they score nothing 
@@ -399,6 +398,19 @@ class test_ui(unittest.TestCase):
         ui_obj = ui.Ui()
         res = ui_obj.is_valid_name("piglet")
         self.assertFalse(res)
+
+    def test_defailt(self):
+        ui_obj = ui.Ui()
+        exp_out = "invalid choice\n"
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        ui_obj.default("")
+
+        printed_output = captured_output.getvalue()
+        sys.stdout = sys.__stdout__
+
+        self.assertEqual(exp_out, printed_output)
 
     @patch("pig.histogram.graph")
     def test_do_oink(self, mock_graph):

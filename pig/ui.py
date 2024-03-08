@@ -99,7 +99,9 @@ class Ui(cmd.Cmd):
         print("\nGame is starting...\n")
         game1.start()
 
-        self.high_score.up_date_score(game1)
+        if game1.is_game_over():
+            print(f"{game1.current_player.name} won this game")
+            self.high_score.up_date_score(game1)
 
     def set_game_type(self):
         """Select game type, return players in new game."""
@@ -173,10 +175,7 @@ class Ui(cmd.Cmd):
 
     def do_rules(self, _):
         """Display game rules."""
-        print(
-            "Each turn, a player can choose to either roll a die or "
-            'to "hold":'
-        )
+        print("Each turn, a player can choose to either roll a die or hold:")
         print(
             "If a player decides to hold, the turn score is added to their "
             "total score and it becomes the next player's turn."
@@ -189,9 +188,7 @@ class Ui(cmd.Cmd):
             "If a player rolls any other number, that number is added to "
             "their turn score and their turn continues."
         )
-        print(
-            "To win the game a player has to score 100 or more points."
-        )
+        print("To win the game a player has to score 100 or more points.")
 
         self.do_menu(None)
 
@@ -214,6 +211,10 @@ class Ui(cmd.Cmd):
     def do_oink(self, _):
         """Show Easter egg."""
         graph()
+
+    def default(self, line):
+        """Overwrite defailt."""
+        print("invalid choice")
 
     # aliasing
     do_Menu = do_menu

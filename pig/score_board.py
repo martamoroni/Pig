@@ -50,7 +50,7 @@ class ScoreBoard:
             print("cring Error no scores useing empty score board")
             return {}
 
-    def calc_percent(self) -> list:
+    def calc_percent(self):
         """Calc win percentig."""
         player_percent = []
         longest = 0
@@ -67,8 +67,8 @@ class ScoreBoard:
     def __str__(self) -> str:
         """Display the current score boared."""
         player_percent, longest = self.calc_percent()
-        score_boared = f"{'Name':<{longest}}{'wins':<10}"
-        score_boared += f"{'played':<10}{'Percent':<10}\n"
+        score_boared = f"{'Name':<{longest+3}}{'Wins':>7}"
+        score_boared += f"{'Played':>7}{'Percent':>11}\n"
         i = 1
         for tub in player_percent:
             wins = self.players[tub[0]]["wins"]
