@@ -10,7 +10,7 @@
 
 ## Rules
 - During a players turn they have 2 options they can roll or stand.
-    - Roll: roll the dice if it is a 1 your turn ends and no points are recived, else the dice is added to your round total.
+    - Roll: roll the dice if it is a 1 your turn ends and no points are received, else the dice is added to your round total.
     - Stand: if you stand the current round total will be added to you score and the other players turn begins.
 
 - The first person to stand with 100 points or more wins the game.
@@ -23,7 +23,7 @@ With the terminal navigate to the location you want the game and execute this co
 git clone https://github.com/martamoroni/Pig.git
 ```
 
-Go into the Pig directory that was just created and start creat the venv:
+Go into the Pig directory that was just created and start create the venv:
 
 ```
 make venv
@@ -38,7 +38,7 @@ for windows or
 ```
 for Unix and Macs
 
-install the dependencices
+install the dependencies
 ```
 make install
 ```
@@ -50,4 +50,13 @@ the game can either be started by executing the main file in the pig directory o
 ```
 make start
 ```
-Once in the game you can type help to see all available commands. If you have questions about the function of any command use help followes by the command in questions for an explenation.
+Once in the game you can type help to see all available commands. If you have questions about the function of any command use help followes by the command in questions for an explanation.
+
+## Intelligence 
+The game implements 3 different levels of difficulty.
+
+The easiest difficulty functions using a random number generator where is has a 1 in 10 chance of holding instead of rolling.
+
+The medium difficulty uses the hold at 20 strategy that is 8% worse then optimal play.
+
+For the higest difficulty we used the optimal strategy. This strategy was obtained by extracting the 3D data from the model that can be found in this [Paper](https://cupola.gettysburg.edu/cgi/viewcontent.cgi?article=1003&context=csfac). This data was then converted into a dictionary dictionary and referenced in the program.
