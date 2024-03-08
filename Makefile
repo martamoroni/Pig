@@ -95,6 +95,9 @@ pdoc:
 	@$(call MESSAGE,$@)
 	pdoc --force --html --output-dir doc/pdoc pig/*.py
 
+uml:
+	pyreverse -S -o png -p pig pig -d doc/ulm
+
 
 pyreverse:
 
@@ -105,7 +108,7 @@ pyreverse:
 	dot -Tpng packages.dot -o doc/pyreverse/packages.png
 	rm -f classes.dot packages.dot
 
-doc: pdoc pyreverse #pydoc #sphinx
+doc: pdoc pyreverse uml #pydoc #sphinx
 
 
 radon-cc:

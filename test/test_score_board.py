@@ -1,7 +1,7 @@
 import unittest
 from pig import score_board
 from pig import game
-from pig import ai
+from pig import ai_player
 import os
 
 
@@ -14,8 +14,8 @@ class test_score_board(unittest.TestCase):
 
     def test_up_date_score(self):
         board = score_board.ScoreBoard()
-        p1 = ai.Ai(1)
-        p2 = ai.Ai(2)
+        p1 = ai_player.Ai(1)
+        p2 = ai_player.Ai(2)
         board.players = board._load_scores("")
         game_obj = game.Game(p1, p2)
         board.up_date_score(game_obj)

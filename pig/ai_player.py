@@ -2,14 +2,15 @@
 
 import pickle
 import random
+from pig import player
 
 
-class Ai:
+class Ai(player.Player):
     """Ai instance."""
 
     def __init__(self, difficulty) -> None:
         """Initialize object."""
-        self.name = None
+        super().__init__(None)
         self.file_name = "docs/pig_perfect_play.bin"
         self.perfect_play = None
         self.roll_dice = self.select_dificulty(difficulty)

@@ -1,12 +1,13 @@
 """Pig dice game."""
 
 import random
+from pig.player import Player
 
 
 class Game:
     """Game instance."""
 
-    def __init__(self, player1, player2) -> None:
+    def __init__(self, player1: Player, player2: Player) -> None:
         """Initialize the object."""
         self.player1 = player1
         self.player2 = player2

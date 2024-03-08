@@ -1,10 +1,10 @@
 """Module that defines the UI class."""
 
 import cmd
-from pig import player
+from pig import human_player
 from pig import game
 from pig.histogram import graph
-from pig import ai
+from pig import ai_player
 from pig import score_board
 
 PIGLET_ART = """
@@ -48,6 +48,7 @@ class Ui(cmd.Cmd):
         self.completekey = "tab"
         self.cmdqueue = []
         self.high_score = score_board.ScoreBoard()
+        self.game1 = game
 
         self.do_menu(None)
 
@@ -95,13 +96,13 @@ class Ui(cmd.Cmd):
         """Select game type and start new game."""
         player1, player2 = self.set_game_type()
 
-        game1 = game.Game(player1, player2)
+        self.game1 = game.Game(player1, player2)
         print("\nGame is starting...\n")
-        game1.start()
+        self.game1.start()
 
-        if game1.is_game_over():
-            print(f"{game1.current_player.name} won this game")
-            self.high_score.up_date_score(game1)
+        if self.game1.is_game_over():
+            print(f"{self.game1.current_player.name} won this game")
+            self.high_score.up_date_score(self.game1)
 
     def set_game_type(self):
         """Select game type, return players in new game."""
@@ -123,7 +124,7 @@ class Ui(cmd.Cmd):
 
         valid_names = self.is_valid_name(name1) and self.is_valid_name(name2)
         if valid_names and name1 != name2:
-            return player.Player(name1), player.Player(name2)
+            return human_player.Player(name1), human_player.Player(name2)
         print("Invalid name")
         return self.select_vs_player()
 
@@ -133,7 +134,7 @@ class Ui(cmd.Cmd):
 
         if self.is_valid_name(name1):
             difficulty = self.set_difficulty()
-            return player.Player(name1), ai.Ai(difficulty)
+            return human_player.Player(name1), ai_player.Ai(difficulty)
         print("Invalid name")
         return self.select_vs_ai()
 

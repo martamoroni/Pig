@@ -1,8 +1,8 @@
 import unittest
 from pig import score_board
 from pig import game
-from pig import player
-from pig import ai
+from pig import human_player
+from pig import ai_player
 from pig import ui
 from unittest import mock
 from unittest.mock import patch
@@ -128,16 +128,18 @@ class test_ui(unittest.TestCase):
         ui_obj.high_score._up_date_game_played("Marta")
         ui_obj.do_changename("")
 
-        self.assertNotIn("pig", ui_obj.high_score.players)
+        self.assertIn("Sven", ui_obj.high_score.players)
 
     def test_changename_exist(self):
         ui_obj = ui.Ui()
 
         ui_obj.high_score._up_date_game_played("test")
+        ui_obj.high_score._up_date_game_played("Marta")
         with patch("builtins.input", side_effects=["Marta", "test"]):
             ui_obj.do_changename("")
 
-            self.assertNotIn("pig", ui_obj.high_score.players)
+            self.assertIn("Marta", ui_obj.high_score.players)
+            self.assertIn("test", ui_obj.high_score.players)
 
     def test_do_start(self):
         player1 = mock.MagicMock()
@@ -206,8 +208,8 @@ class test_ui(unittest.TestCase):
         ui_obj = ui.Ui()
         res = ui_obj.select_vs_ai()
 
-        self.assertIsInstance(res[0], player.Player)
-        self.assertIsInstance(res[1], ai.Ai)
+        self.assertIsInstance(res[0], human_player.Player)
+        self.assertIsInstance(res[1], ai_player.Ai)
         self.assertEqual(res[0].name, "Marta")
 
     @patch("builtins.input", side_effect=["pig", "Marta", "pig"])
@@ -215,8 +217,8 @@ class test_ui(unittest.TestCase):
         ui_obj = ui.Ui()
         res = ui_obj.select_vs_ai()
 
-        self.assertIsInstance(res[0], player.Player)
-        self.assertIsInstance(res[1], ai.Ai)
+        self.assertIsInstance(res[0], human_player.Player)
+        self.assertIsInstance(res[1], ai_player.Ai)
         self.assertEqual(res[0].name, "Marta")
 
     def test_display_game_types(self):
