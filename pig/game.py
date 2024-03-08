@@ -67,6 +67,6 @@ class Game:
 
     def print_game_state(self) -> None:
         """Display the current game state."""
-        print(f"\n{self.player1.name} has {self.player1.points} paonts")
+        print(f"\n{self.player1.name} has {self.player1.points} points")
         print(f"{self.player2.name} has {self.player2.points} points\n")
-        print(f"{self.current_player.name}s turn\n")
+        print(f"{self.current_player.name}'s turn\n")
