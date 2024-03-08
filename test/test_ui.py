@@ -1,5 +1,3 @@
-"""Unit testing."""
-
 import unittest
 from pig import score_board
 from pig import game
@@ -43,17 +41,13 @@ BOAR_ART = """                                               __
 
 
 class test_ui(unittest.TestCase):
-    """Test Ui class."""
-
     def test_init(self):
-        """Test initiation"""
         ui1 = ui.Ui()
         self.assertTrue(ui1.prompt == "(Game) > ")
         self.assertTrue(ui1.completekey == "tab")
         self.assertIsInstance(ui1.high_score, score_board.ScoreBoard)
 
     def test_init__(self):
-
         ui_obj = ui.Ui()
 
         self.assertTrue(ui_obj.prompt == "(Game) > ")
@@ -63,14 +57,13 @@ class test_ui(unittest.TestCase):
 
     # DONE
     def test_do_menu(self):
-        """Test if correct menu is shown."""
         ui_obj = ui.Ui()
         exp_output = """----- MENU -----
-        \u2022Start
-        \u2022Board
-        \u2022ChangeName
-        \u2022Rules
-        \u2022Exit"""
+        - Start
+        - Board
+        - ChangeName
+        - Rules
+        - Exit"""
 
         captured_output = StringIO()
         sys.stdout = captured_output
@@ -86,7 +79,6 @@ class test_ui(unittest.TestCase):
         self.assertEqual(printed_output, exp_output)
 
     def test_do_board(self):
-        """Check if board is printed and do_menu is called"""
         ui_obj = ui.Ui()
 
         captured_output = StringIO()
@@ -100,7 +92,6 @@ class test_ui(unittest.TestCase):
         self.assertIn("Name", printed_output)
 
     def test_changename_success(self):
-        """Check if change name works with correct input."""
         ui_obj = ui.Ui()
 
         ui_obj.high_score._up_date_game_played("Marta")
@@ -110,7 +101,6 @@ class test_ui(unittest.TestCase):
             self.assertIn("Sven", ui_obj.high_score.players)
 
     def test_changename_retry(self):
-        """Check if change name works with 1 retry and then correct input."""
         ui_obj = ui.Ui()
 
         ui_obj.high_score._up_date_game_played("Marta")
@@ -122,7 +112,6 @@ class test_ui(unittest.TestCase):
             self.assertIn("Ben", ui_obj.high_score.players)
 
     def test_changename_no_retry(self):
-        """Check if change name works with 1 retry and then correct input."""
         ui_obj = ui.Ui()
 
         ui_obj.high_score._up_date_game_played("Marta")
@@ -134,7 +123,6 @@ class test_ui(unittest.TestCase):
 
     @patch("builtins.input", side_effect=["Marta", "pig", "Sven", "Sven"])
     def test_changename_invalid(self, mock_input):
-        """Check when new name is invalid."""
         ui_obj = ui.Ui()
 
         ui_obj.high_score._up_date_game_played("Marta")
@@ -143,7 +131,6 @@ class test_ui(unittest.TestCase):
         self.assertNotIn("pig", ui_obj.high_score.players)
 
     def test_changename_exist(self):
-        """Check when new name is invalid."""
         ui_obj = ui.Ui()
 
         ui_obj.high_score._up_date_game_played("test")
@@ -153,7 +140,6 @@ class test_ui(unittest.TestCase):
             self.assertNotIn("pig", ui_obj.high_score.players)
 
     def test_do_start(self):
-        """Check if do_start start game correctly and update scores"""
         player1 = mock.MagicMock()
         player2 = mock.MagicMock()
         mock_game_instance = mock.MagicMock()
@@ -234,7 +220,6 @@ class test_ui(unittest.TestCase):
         self.assertEqual(res[0].name, "Marta")
 
     def test_display_game_types(self):
-        """Check is output game types is correct."""
         ui_obj = ui.Ui()
         exp_output = """Choose game type:
         1. 1 VS 1
@@ -282,7 +267,6 @@ class test_ui(unittest.TestCase):
         self.assertEqual(res, exp)
 
     def test_display_ai(self):
-        """Check if AI shown is correct."""
         ui_obj = ui.Ui()
 
         captured_output = StringIO()
@@ -333,12 +317,11 @@ class test_ui(unittest.TestCase):
         sys.stdout = sys.__stdout__
 
     def test_display_difficulties(self):
-        """Check if AI difficulties menu is correct."""
         ui_obj = ui.Ui()
         exp_output = """Choose AI difficulty:
-        \u2022Piglet
-        \u2022Pig
-        \u2022Boar"""
+        - Piglet
+        - Pig
+        - Boar"""
 
         captured_output = StringIO()
         sys.stdout = captured_output
@@ -354,17 +337,16 @@ class test_ui(unittest.TestCase):
         self.assertEqual(printed_output, exp_output)
 
     def test_do_rules(self):
-        """Check if displayed rules are correct."""
         ui_obj = ui.Ui()
-        exp_output = """Each turn, a player repeatedly rolls a die until either 
-        a 1 is rolled or the player decides to "hold": 
-        \u2022If the player rolls a 1, 
-        they score nothing and it becomes the next player's turn.
-        \u2022If the player rolls any other number, it is 
-        added to their turn total and the player's turn continues.
-        \u2022If a player chooses to "hold", their turn total is added 
-        to their score, and it becomes the next player's turn.
-        The first player to score 100 or more points wins."""
+        exp_output = """Each turn, a player can choose to either roll a die or 
+        to "hold": 
+        If a player decides to hold, the turn score is added to their 
+        total score and it becomes the next player's turn. 
+        If the player rolls 1, they score nothing 
+        and it becomes the next player's turn.
+        If a player rolls any other number, that number is added to 
+        their turn score and their turn continues.
+        To win the game a player has to score 100 or more points."""
 
         captured_output = StringIO()
         sys.stdout = captured_output
@@ -380,7 +362,6 @@ class test_ui(unittest.TestCase):
         self.assertIn(exp_output, printed_output)
 
     def test_invalid_choice(self):
-        """Check if message for invalid choice is correct."""
         ui_obj = ui.Ui()
         exp_output = "Please enter valid choice"
 
@@ -398,7 +379,6 @@ class test_ui(unittest.TestCase):
         self.assertEqual(printed_output, exp_output)
 
     def test_do_quit(self):
-        """Test if True is returned when exiting the program and high_score.save_scores() is called."""
         ui_obj = ui.Ui()
 
         mock_high_score = mock.Mock()
@@ -411,19 +391,16 @@ class test_ui(unittest.TestCase):
         mock_high_score.save_scores.assert_called_once()
 
     def test_is_valid_name_true(self):
-        """Test when name is valid."""
         ui_obj = ui.Ui()
         res = ui_obj.is_valid_name("test_name")
         self.assertTrue(res)
 
     def test_is_valid_name_false(self):
-        """Test when name is invalid."""
         ui_obj = ui.Ui()
         res = ui_obj.is_valid_name("piglet")
         self.assertFalse(res)
 
     @patch("pig.histogram.graph")
     def test_do_oink(self, mock_graph):
-        """Test if graph function is called once"""
         ui_obj = ui.Ui()
         ui_obj.do_oink(None)
