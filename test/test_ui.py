@@ -11,11 +11,11 @@ from unittest.mock import patch
 from io import StringIO
 import sys
 
-piglet_art = """
+PIGLET_ART = """
       ,,__
     c''   )?
       '''' """
-pig_art = """              _
+PIG_ART = """              _
          <`--'\\>______
          /. .  `'     \\
         (`')  ,        @
@@ -23,7 +23,7 @@ pig_art = """              _
             )-)_/--( >  jv
            ''''  ''''
 """
-boar_art = """                                               __
+BOAR_ART = """                                               __
              ____               ________     ,',.`.
            \\`''-.`-._..--...-'''        ```--':_ ) )
             `-.._` '              -..           ' /
@@ -145,6 +145,7 @@ class test_ui(unittest.TestCase):
 
         self.assertNotIn("pig", ui_obj.high_score.players)
 
+  
     def test_changename_exist(self):
         """Check when new name is invalid."""
         ui_obj = ui.Ui()
@@ -238,9 +239,9 @@ class test_ui(unittest.TestCase):
 
     # DONE
     @patch("builtins.input", side_effect=["Marta", "piglet"])
-    def test_select_vs_Ai_valid(self, mock_input):
+    def test_select_vs_ai_valid(self, mock_input):
         ui_obj = ui.Ui()
-        res = ui_obj.select_vs_Ai()
+        res = ui_obj.select_vs_ai()
 
         self.assertIsInstance(res[0], player.Player)
         self.assertIsInstance(res[1], ai.Ai)
@@ -250,7 +251,7 @@ class test_ui(unittest.TestCase):
     @patch("builtins.input", side_effect=["pig", "Marta", "pig"])
     def test_select_vs_Ai_invalid(self, mock_input):
         ui_obj = ui.Ui()
-        res = ui_obj.select_vs_Ai()
+        res = ui_obj.select_vs_ai()
 
         self.assertIsInstance(res[0], player.Player)
         self.assertIsInstance(res[1], ai.Ai)
@@ -306,7 +307,7 @@ class test_ui(unittest.TestCase):
         self.assertEqual(res, exp)
 
     # DONE
-    def test_display_AI(self):
+    def test_display_ai(self):
         """Check if AI shown is correct."""
         ui_obj = ui.Ui()
 
@@ -314,8 +315,8 @@ class test_ui(unittest.TestCase):
         sys.stdout = captured_output
 
         # Test for piglet
-        ui_obj.display_AI("piglet", piglet_art)
-        exp_output = "piglet is approaching... " + piglet_art
+        ui_obj.display_AI("piglet", PIGLET_ART)
+        exp_output = "piglet is approaching... " + PIGLET_ART
 
         printed_output = captured_output.getvalue()
 
@@ -329,8 +330,8 @@ class test_ui(unittest.TestCase):
         captured_output.seek(0)  # Move position to beginning
 
         # Test for pig
-        ui_obj.display_AI("pig", pig_art)
-        exp_output = "pig is approaching... " + pig_art
+        ui_obj.display_AI("pig", PIG_ART)
+        exp_output = "pig is approaching... " + PIG_ART
 
         printed_output = captured_output.getvalue()
 
@@ -344,8 +345,8 @@ class test_ui(unittest.TestCase):
         captured_output.seek(0)
 
         # Test for boar
-        ui_obj.display_AI("boar", boar_art)
-        exp_output = "boar is approaching... " + boar_art
+        ui_obj.display_AI("boar", BOAR_ART)
+        exp_output = "boar is approaching... " + BOAR_ART
 
         printed_output = captured_output.getvalue()
 
