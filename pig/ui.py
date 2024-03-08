@@ -187,9 +187,10 @@ class Ui(cmd.Cmd):
         )
         print(
             "If a player rolls any other number, that number is added to "
-            "their turn score and their turn continues.")
+            "their turn score and their turn continues."
+        )
         print(
-            "To win the game a player has to score 100 or more points"
+            "To win the game a player has to score 100 or more points."
         )
 
         self.do_menu(None)
