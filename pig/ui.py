@@ -7,11 +7,11 @@ from pig.histogram import graph
 from pig import ai
 from pig import score_board
 
-piglet_art = """
+PIGLET_ART = """
       ,,__
     c''   )?
       '''' """
-pig_art = """              _
+PIG_ART = """              _
          <`--'\\>______
          /. .  `'     \\
         (`')  ,        @
@@ -19,7 +19,7 @@ pig_art = """              _
             )-)_/--( >  jv
            ''''  ''''
                     """
-boar_art = """                                               __
+BOAR_ART = """                                               __
              ____               ________     ,',.`.
            \\`''-.`-._..--...-'''        ```--':_ ) )
             `-.._` '              -..           ' /
@@ -110,30 +110,31 @@ class Ui(cmd.Cmd):
 
             if choice == "1":
                 return self.select_vs_player()
-            elif choice == "2":
-                return self.select_vs_Ai()
-            else:
-                self.invalid_choice()
+            if choice == "2":
+                return self.select_vs_ai()
+            self.invalid_choice()
 
     def select_vs_player(self):
+        """Select player names."""
         name1 = input("\nName player 1: ")
         name2 = input("Name player 2: ")
 
-        if self.is_valid_name(name1) and self.is_valid_name(name2) and name1 != name2:
+        if (self.is_valid_name(name1) and
+                self.is_valid_name(name2) and
+                name1 != name2):
             return player.Player(name1), player.Player(name2)
-        else:
-            print("Invalid name")
-            return self.select_vs_player()
+        print("Invalid name")
+        return self.select_vs_player()
 
-    def select_vs_Ai(self):
+    def select_vs_ai(self):
+        """Select player name and Ai."""
         name1 = input("\nName player 1: ")
 
         if self.is_valid_name(name1):
             difficulty = self.set_difficulty()
             return player.Player(name1), ai.Ai(difficulty)
-        else:
-            print("Invalid name")
-            return self.select_vs_Ai()
+        print("Invalid name")
+        return self.select_vs_ai()
 
     def display_game_types(self):
         """Print game types menu."""
@@ -149,18 +150,17 @@ class Ui(cmd.Cmd):
             choice = input("Select difficulty: ").lower()
 
             if choice == "piglet":
-                self.display_AI(choice, piglet_art)
+                self.display_ai(choice, PIGLET_ART)
                 return 1
-            elif choice == "pig":
-                self.display_AI(choice, pig_art)
+            if choice == "pig":
+                self.display_ai(choice, PIG_ART)
                 return 2
-            elif choice == "boar":
-                self.display_AI(choice, boar_art)
+            if choice == "boar":
+                self.display_ai(choice, BOAR_ART)
                 return 3
-            else:
-                self.invalid_choice()
+            self.invalid_choice()
 
-    def display_AI(self, choice, art):
+    def display_ai(self, choice, art):
         """Print selected AI."""
         print(f"\n{choice} is approaching...")
         print(art)
@@ -205,7 +205,7 @@ class Ui(cmd.Cmd):
 
     def is_valid_name(self, name):
         """Check if name is valid: is not equal to one of the AI types."""
-        if name == "piglet" or name == "pig" or name == "boar":
+        if name in ("piglet", "pig", "boar"):
             return False
 
         return True
