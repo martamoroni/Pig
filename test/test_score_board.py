@@ -40,6 +40,12 @@ class test_score_board(unittest.TestCase):
         self.assertFalse("test_name" in board.players)
         self.assertTrue("new_name" in board.players)
 
+    def test_up_date_name_invalid_old(self):
+        board = score_board.ScoreBoard()
+        board.up_date_name("test_name", "new_name")
+        self.assertFalse("test_name" in board.players)
+        self.assertFalse("new_name" in board.players)
+
     def test_name_exists(self):
         board = score_board.ScoreBoard()
         board._up_date_game_played("test_name")
@@ -53,8 +59,7 @@ class test_score_board(unittest.TestCase):
 
     def test_save_scores(self):
         board = score_board.ScoreBoard()
-        board.file_name = "docs/test_file.bin"
-        board.save_scores(board.file_name)
+        board.save_scores("docs/test_file.bin")
         self.assertTrue(os.path.exists("docs/test_file.bin"))
         os.remove("docs/test_file.bin")
 

@@ -22,6 +22,7 @@ class Player:
                     return False
                 case "c":
                     self.points = 90
+                    print("your score is now 90")
                     return True
                 case "e":
                     game.game_paused = True
