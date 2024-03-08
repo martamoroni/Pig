@@ -1,8 +1,9 @@
 """Unit testing."""
+
 import unittest
 from pig import score_board
 from pig import game
-from pig import player 
+from pig import player
 from pig import ai
 from pig import ui
 from unittest import mock
@@ -40,19 +41,22 @@ boar_art = """                                               __
                            /,_,'::. `-'`':SSt:.
 """
 
+
 class test_ui(unittest.TestCase):
     """Test Ui class."""
-  
+
     def test_init(self):
         """Test initiation"""
         ui1 = ui.Ui()
-        self.assertTrue(ui1.prompt =="(Game) > ")
+        self.assertTrue(ui1.prompt == "(Game) > ")
         self.assertTrue(ui1.completekey == "tab")
         self.assertIsInstance(ui1.high_score, score_board.ScoreBoard)
 
     def test_init__(self):
 
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        print(
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        )
         ui_obj = ui.Ui()
 
         self.assertTrue(ui_obj.prompt == "(Game) > ")
@@ -140,7 +144,10 @@ class test_ui(unittest.TestCase):
         ui_obj = ui.Ui()
 
         with patch.object(ui_obj, "set_game_type") as mock_set_game_type:
-            mock_set_game_type.return_value = (player1, player2)  # value that should be returned
+            mock_set_game_type.return_value = (
+                player1,
+                player2,
+            )  # value that should be returned
 
             with patch("pig.game.Game") as mock_Game:
                 mock_Game.return_value = mock_game_instance
@@ -151,17 +158,17 @@ class test_ui(unittest.TestCase):
 
         mock_Game.assert_called_once_with(player1, player2)
 
-#    @patch("pig.ui.set_game_type")
-#    @patch("pig.game.Game")
-#    def test_do_start(self, mock_Game, mock_set_game_type):
-#        """Check if do_start start game correctly and update scores"""
-#        player1 = mock.MagicMock()
-#        player2 = mock.MagicMock()
-#        mock_game_instance = mock.MagicMock()
-#        ui_obj = ui.Ui()
-#
-#        mock_set_game_type.return_value = (player1, player2)  # value that shoul be returned
-#        mock_Game.return_value = mock_game_instance
+    #    @patch("pig.ui.set_game_type")
+    #    @patch("pig.game.Game")
+    #    def test_do_start(self, mock_Game, mock_set_game_type):
+    #        """Check if do_start start game correctly and update scores"""
+    #        player1 = mock.MagicMock()
+    #        player2 = mock.MagicMock()
+    #        mock_game_instance = mock.MagicMock()
+    #        ui_obj = ui.Ui()
+    #
+    #        mock_set_game_type.return_value = (player1, player2)  # value that shoul be returned
+    #        mock_Game.return_value = mock_game_instance
 
     # DONE
     @patch("builtins.input", side_effect=["1"])
@@ -192,7 +199,7 @@ class test_ui(unittest.TestCase):
                 mock_invalid_choice.assert_called_once()
 
     # DONE
-    @patch("builtins.input", side_effect=["Marta", "Sven"])      
+    @patch("builtins.input", side_effect=["Marta", "Sven"])
     def test_select_vs_player_valid(self, mock_input):
         ui_obj = ui.Ui()
         res = ui_obj.select_vs_player()
@@ -200,7 +207,7 @@ class test_ui(unittest.TestCase):
         self.assertEqual(res[1].name, "Sven")
 
     # DONE
-    @patch("builtins.input", side_effect=["Marta", "Marta", "Marta", "Sven"])      
+    @patch("builtins.input", side_effect=["Marta", "Marta", "Marta", "Sven"])
     def test_select_vs_player_invalid(self, mock_input):
         ui_obj = ui.Ui()
         res = ui_obj.select_vs_player()

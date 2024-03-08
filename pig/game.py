@@ -7,7 +7,7 @@ class Game:
     """Game instance."""
 
     def __init__(self, player1, player2) -> None:
-        """Init the object."""
+        """Initialize the object."""
         self.player1 = player1
         self.player2 = player2
         self.current_player = player1

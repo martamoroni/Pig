@@ -1,4 +1,4 @@
-"""Unit testing."""
+"""Unit test."""
 
 import unittest
 from pig import player
@@ -12,7 +12,7 @@ class test_player(unittest.TestCase):
     """Test Player class."""
 
     def test_init(self) -> None:
-        """Instantiate and object and check its properties."""
+        """Initialize and object and check its properties."""
         player1 = player.Player("Marta")
         exp = player.Player
         self.assertIsInstance(player1, exp)

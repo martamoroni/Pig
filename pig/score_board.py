@@ -4,10 +4,10 @@ import pickle
 
 
 class ScoreBoard:
-    """Score boared."""
+    """Score board."""
 
     def __init__(self) -> None:
-        """Init the object."""
+        """Initialize the object."""
         self.file_name = "docs/high_scores.bin"
         self.players = self._load_scores(self.file_name)
 

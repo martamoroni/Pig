@@ -8,7 +8,7 @@ class Ai:
     """Ai instance."""
 
     def __init__(self, difficulty) -> None:
-        """Initiat object."""
+        """Initialize object."""
         self.name = None
         self.file_name = "docs/pig_perfect_play.bin"
         self.perfect_play = None
@@ -22,7 +22,7 @@ class Ai:
             self.perfect_play = pickle.load(f)
 
     def select_dificulty(self, difficulty):
-        """Set name for dificulty and returns coresponding method."""
+        """Set name for difficulty and return coresponding method."""
 
         def simple(_) -> bool:
             return self.ran.randint(1, 10) != 6
@@ -36,14 +36,14 @@ class Ai:
 
         match difficulty:
             case 1:
-                self.name = "pig-let"
+                self.name = "piglet"
                 return simple
             case 2:
                 self.name = "pig"
                 return normal
             case 3:
                 self.load_perfect_play()
-                self.name = "Boar"
+                self.name = "boar"
                 return hard
             case _:
                 print("error: not valid difficulty, difficulty set to normal")

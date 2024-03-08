@@ -49,16 +49,18 @@ class Ui(cmd.Cmd):
         self.cmdqueue = []
         self.high_score = score_board.ScoreBoard()
 
-        self.do_menu()
+        self.do_menu(None)
 
     def do_menu(self, _):
         """Print menu."""
-        print("\n----- MENU -----\n"
-              "\u2022Start\n"
-              "\u2022Board\n"
-              "\u2022ChangeName\n"
-              "\u2022Rules\n"
-              "\u2022Exit\n")
+        print(
+            "\n----- MENU -----\n"
+            "\u2022Start\n"
+            "\u2022Board\n"
+            "\u2022ChangeName\n"
+            "\u2022Rules\n"
+            "\u2022Exit\n"
+        )
 
     def do_board(self, _):
         """Print board."""
@@ -117,9 +119,7 @@ class Ui(cmd.Cmd):
         name1 = input("\nName player 1: ")
         name2 = input("Name player 2: ")
 
-        if (self.is_valid_name(name1)
-            and self.is_valid_name(name2)
-            and name1 != name2):
+        if self.is_valid_name(name1) and self.is_valid_name(name2) and name1 != name2:
             return player.Player(name1), player.Player(name2)
         else:
             print("Invalid name")
