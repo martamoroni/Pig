@@ -60,3 +60,9 @@ The easiest difficulty functions using a random number generator where is has a 
 The medium difficulty uses the hold at 20 strategy that is 8% worse then optimal play.
 
 For the higest difficulty we used the optimal strategy. This strategy was obtained by extracting the 3D data from the model that can be found in this [Paper](https://cupola.gettysburg.edu/cgi/viewcontent.cgi?article=1003&context=csfac). This data was then converted into a dictionary dictionary and referenced in the program.
+
+## Documentation
+To regenerate the documentation from the code, including the UML diagrams, go to the root directory of the project and execute this command:
+```
+make doc
+```
