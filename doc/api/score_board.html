@@ -61,9 +61,8 @@ class ScoreBoard:
             score = self.players[o_name]
             self.players[n_name] = score
             del self.players[o_name]
-        except:
+        except KeyError:
             print(&#34;old name does not exist&#34;)
-            pass
 
     def name_exists(self, name):
         &#34;&#34;&#34;Test if name is in the score boared.&#34;&#34;&#34;
@@ -160,9 +159,8 @@ class ScoreBoard:
             score = self.players[o_name]
             self.players[n_name] = score
             del self.players[o_name]
-        except:
+        except KeyError:
             print(&#34;old name does not exist&#34;)
-            pass
 
     def name_exists(self, name):
         &#34;&#34;&#34;Test if name is in the score boared.&#34;&#34;&#34;
@@ -280,9 +278,8 @@ class ScoreBoard:
         score = self.players[o_name]
         self.players[n_name] = score
         del self.players[o_name]
-    except:
-        print(&#34;old name does not exist&#34;)
-        pass</code></pre>
+    except KeyError:
+        print(&#34;old name does not exist&#34;)</code></pre>
 </details>
 </dd>
 <dt id="score_board.ScoreBoard.up_date_score"><code class="name flex">

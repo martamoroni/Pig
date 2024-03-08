@@ -47,6 +47,6 @@ class Ai(player.Player):
                 self.name = "boar"
                 return hard
             case _:
-                print("error: not valid difficulty, difficulty set to normal")
+                print("Error: not valid difficulty, difficulty set to normal")
                 self.name = "pig"
                 return normal
