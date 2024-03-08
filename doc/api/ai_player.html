@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>player API documentation</title>
-<meta name="description" content="Player super class." />
+<title>ai_player API documentation</title>
+<meta name="description" content="Ai behaviour." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -19,30 +19,66 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>player</code></h1>
+<h1 class="title">Module <code>ai_player</code></h1>
 </header>
 <section id="section-intro">
-<p>Player super class.</p>
+<p>Ai behaviour.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;Player super class.&#34;&#34;&#34;
+<pre><code class="python">&#34;&#34;&#34;Ai behaviour.&#34;&#34;&#34;
+
+import pickle
+import random
+from pig import player
 
 
-class Player:
-    &#34;&#34;&#34;Player super class instance.&#34;&#34;&#34;
+class Ai(player.Player):
+    &#34;&#34;&#34;Ai instance.&#34;&#34;&#34;
 
-    def __init__(self, name) -&gt; None:
-        &#34;&#34;&#34;Class init.&#34;&#34;&#34;
-        self.name: str = name
-        self.score = 0
+    def __init__(self, difficulty) -&gt; None:
+        &#34;&#34;&#34;Initialize object.&#34;&#34;&#34;
+        super().__init__(None)
+        self.file_name = &#34;docs/pig_perfect_play.bin&#34;
+        self.perfect_play = None
+        self.roll_dice = self.select_dificulty(difficulty)
+        self.points = 0
+        self.ran = random
 
-    def roll_dice(self, game):
-        &#34;&#34;&#34;Dont look.&#34;&#34;&#34;
+    def load_perfect_play(self) -&gt; None:
+        &#34;&#34;&#34;Load the perfect play instructions.&#34;&#34;&#34;
+        with open(self.file_name, &#34;rb&#34;) as f:
+            self.perfect_play = pickle.load(f)
 
-    def anti_cry(self):
-        &#34;&#34;&#34;Stop pylint crying.&#34;&#34;&#34;</code></pre>
+    def select_dificulty(self, difficulty):
+        &#34;&#34;&#34;Set name for difficulty and return coresponding method.&#34;&#34;&#34;
+
+        def simple(_) -&gt; bool:
+            return self.ran.randint(1, 10) != 6
+
+        def normal(game) -&gt; bool:
+            return game.current_score &lt; 20
+
+        def hard(game) -&gt; bool:
+            position_3d = self.perfect_play[self.points][game.player1.points]
+            return position_3d &gt; game.current_score
+
+        match difficulty:
+            case 1:
+                self.name = &#34;piglet&#34;
+                return simple
+            case 2:
+                self.name = &#34;pig&#34;
+                return normal
+            case 3:
+                self.load_perfect_play()
+                self.name = &#34;boar&#34;
+                return hard
+            case _:
+                print(&#34;error: not valid difficulty, difficulty set to normal&#34;)
+                self.name = &#34;pig&#34;
+                return normal</code></pre>
 </details>
 </section>
 <section>
@@ -54,57 +90,121 @@ class Player:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="player.Player"><code class="flex name class">
-<span>class <span class="ident">Player</span></span>
-<span>(</span><span>name)</span>
+<dt id="ai_player.Ai"><code class="flex name class">
+<span>class <span class="ident">Ai</span></span>
+<span>(</span><span>difficulty)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Player super class instance.</p>
-<p>Class init.</p></div>
+<div class="desc"><p>Ai instance.</p>
+<p>Initialize object.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Player:
-    &#34;&#34;&#34;Player super class instance.&#34;&#34;&#34;
+<pre><code class="python">class Ai(player.Player):
+    &#34;&#34;&#34;Ai instance.&#34;&#34;&#34;
 
-    def __init__(self, name) -&gt; None:
-        &#34;&#34;&#34;Class init.&#34;&#34;&#34;
-        self.name: str = name
-        self.score = 0
+    def __init__(self, difficulty) -&gt; None:
+        &#34;&#34;&#34;Initialize object.&#34;&#34;&#34;
+        super().__init__(None)
+        self.file_name = &#34;docs/pig_perfect_play.bin&#34;
+        self.perfect_play = None
+        self.roll_dice = self.select_dificulty(difficulty)
+        self.points = 0
+        self.ran = random
 
-    def roll_dice(self, game):
-        &#34;&#34;&#34;Dont look.&#34;&#34;&#34;
+    def load_perfect_play(self) -&gt; None:
+        &#34;&#34;&#34;Load the perfect play instructions.&#34;&#34;&#34;
+        with open(self.file_name, &#34;rb&#34;) as f:
+            self.perfect_play = pickle.load(f)
 
-    def anti_cry(self):
-        &#34;&#34;&#34;Stop pylint crying.&#34;&#34;&#34;</code></pre>
+    def select_dificulty(self, difficulty):
+        &#34;&#34;&#34;Set name for difficulty and return coresponding method.&#34;&#34;&#34;
+
+        def simple(_) -&gt; bool:
+            return self.ran.randint(1, 10) != 6
+
+        def normal(game) -&gt; bool:
+            return game.current_score &lt; 20
+
+        def hard(game) -&gt; bool:
+            position_3d = self.perfect_play[self.points][game.player1.points]
+            return position_3d &gt; game.current_score
+
+        match difficulty:
+            case 1:
+                self.name = &#34;piglet&#34;
+                return simple
+            case 2:
+                self.name = &#34;pig&#34;
+                return normal
+            case 3:
+                self.load_perfect_play()
+                self.name = &#34;boar&#34;
+                return hard
+            case _:
+                print(&#34;error: not valid difficulty, difficulty set to normal&#34;)
+                self.name = &#34;pig&#34;
+                return normal</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pig.player.Player</li>
+</ul>
 <h3>Methods</h3>
 <dl>
-<dt id="player.Player.anti_cry"><code class="name flex">
-<span>def <span class="ident">anti_cry</span></span>(<span>self)</span>
+<dt id="ai_player.Ai.load_perfect_play"><code class="name flex">
+<span>def <span class="ident">load_perfect_play</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Stop pylint crying.</p></div>
+<div class="desc"><p>Load the perfect play instructions.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def anti_cry(self):
-    &#34;&#34;&#34;Stop pylint crying.&#34;&#34;&#34;</code></pre>
+<pre><code class="python">def load_perfect_play(self) -&gt; None:
+    &#34;&#34;&#34;Load the perfect play instructions.&#34;&#34;&#34;
+    with open(self.file_name, &#34;rb&#34;) as f:
+        self.perfect_play = pickle.load(f)</code></pre>
 </details>
 </dd>
-<dt id="player.Player.roll_dice"><code class="name flex">
-<span>def <span class="ident">roll_dice</span></span>(<span>self, game)</span>
+<dt id="ai_player.Ai.select_dificulty"><code class="name flex">
+<span>def <span class="ident">select_dificulty</span></span>(<span>self, difficulty)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Dont look.</p></div>
+<div class="desc"><p>Set name for difficulty and return coresponding method.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def roll_dice(self, game):
-    &#34;&#34;&#34;Dont look.&#34;&#34;&#34;</code></pre>
+<pre><code class="python">def select_dificulty(self, difficulty):
+    &#34;&#34;&#34;Set name for difficulty and return coresponding method.&#34;&#34;&#34;
+
+    def simple(_) -&gt; bool:
+        return self.ran.randint(1, 10) != 6
+
+    def normal(game) -&gt; bool:
+        return game.current_score &lt; 20
+
+    def hard(game) -&gt; bool:
+        position_3d = self.perfect_play[self.points][game.player1.points]
+        return position_3d &gt; game.current_score
+
+    match difficulty:
+        case 1:
+            self.name = &#34;piglet&#34;
+            return simple
+        case 2:
+            self.name = &#34;pig&#34;
+            return normal
+        case 3:
+            self.load_perfect_play()
+            self.name = &#34;boar&#34;
+            return hard
+        case _:
+            print(&#34;error: not valid difficulty, difficulty set to normal&#34;)
+            self.name = &#34;pig&#34;
+            return normal</code></pre>
 </details>
 </dd>
 </dl>
@@ -121,10 +221,10 @@ class Player:
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="player.Player" href="#player.Player">Player</a></code></h4>
+<h4><code><a title="ai_player.Ai" href="#ai_player.Ai">Ai</a></code></h4>
 <ul class="">
-<li><code><a title="player.Player.anti_cry" href="#player.Player.anti_cry">anti_cry</a></code></li>
-<li><code><a title="player.Player.roll_dice" href="#player.Player.roll_dice">roll_dice</a></code></li>
+<li><code><a title="ai_player.Ai.load_perfect_play" href="#ai_player.Ai.load_perfect_play">load_perfect_play</a></code></li>
+<li><code><a title="ai_player.Ai.select_dificulty" href="#ai_player.Ai.select_dificulty">select_dificulty</a></code></li>
 </ul>
 </li>
 </ul>

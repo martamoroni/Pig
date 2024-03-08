@@ -30,12 +30,13 @@
 <pre><code class="python">&#34;&#34;&#34;Pig dice game.&#34;&#34;&#34;
 
 import random
+from pig.player import Player
 
 
 class Game:
     &#34;&#34;&#34;Game instance.&#34;&#34;&#34;
 
-    def __init__(self, player1, player2) -&gt; None:
+    def __init__(self, player1: Player, player2: Player) -&gt; None:
         &#34;&#34;&#34;Initialize the object.&#34;&#34;&#34;
         self.player1 = player1
         self.player2 = player2
@@ -111,7 +112,7 @@ class Game:
 <dl>
 <dt id="game.Game"><code class="flex name class">
 <span>class <span class="ident">Game</span></span>
-<span>(</span><span>player1, player2)</span>
+<span>(</span><span>player1: pig.player.Player, player2: pig.player.Player)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Game instance.</p>
@@ -123,7 +124,7 @@ class Game:
 <pre><code class="python">class Game:
     &#34;&#34;&#34;Game instance.&#34;&#34;&#34;
 
-    def __init__(self, player1, player2) -&gt; None:
+    def __init__(self, player1: Player, player2: Player) -&gt; None:
         &#34;&#34;&#34;Initialize the object.&#34;&#34;&#34;
         self.player1 = player1
         self.player2 = player2

@@ -96,7 +96,7 @@ pdoc:
 	pdoc --force --html --output-dir doc/api pig/*.py
 
 uml:
-	pyreverse -S -o png -p pig pig -d doc/ulm
+	pyreverse -S -o png -p pig -d doc/uml pig
 
 
 pyreverse:

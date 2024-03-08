@@ -30,10 +30,10 @@
 <pre><code class="python">&#34;&#34;&#34;Module that defines the UI class.&#34;&#34;&#34;
 
 import cmd
-from pig import player
+from pig import human_player
 from pig import game
 from pig.histogram import graph
-from pig import ai
+from pig import ai_player
 from pig import score_board
 
 PIGLET_ART = &#34;&#34;&#34;
@@ -77,6 +77,7 @@ class Ui(cmd.Cmd):
         self.completekey = &#34;tab&#34;
         self.cmdqueue = []
         self.high_score = score_board.ScoreBoard()
+        self.game1 = game
 
         self.do_menu(None)
 
@@ -124,13 +125,13 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
         player1, player2 = self.set_game_type()
 
-        game1 = game.Game(player1, player2)
+        self.game1 = game.Game(player1, player2)
         print(&#34;\nGame is starting...\n&#34;)
-        game1.start()
+        self.game1.start()
 
-        if game1.is_game_over():
-            print(f&#34;{game1.current_player.name} won this game&#34;)
-            self.high_score.up_date_score(game1)
+        if self.game1.is_game_over():
+            print(f&#34;{self.game1.current_player.name} won this game&#34;)
+            self.high_score.up_date_score(self.game1)
 
     def set_game_type(self):
         &#34;&#34;&#34;Select game type, return players in new game.&#34;&#34;&#34;
@@ -152,7 +153,7 @@ class Ui(cmd.Cmd):
 
         valid_names = self.is_valid_name(name1) and self.is_valid_name(name2)
         if valid_names and name1 != name2:
-            return player.Player(name1), player.Player(name2)
+            return human_player.Player(name1), human_player.Player(name2)
         print(&#34;Invalid name&#34;)
         return self.select_vs_player()
 
@@ -162,7 +163,7 @@ class Ui(cmd.Cmd):
 
         if self.is_valid_name(name1):
             difficulty = self.set_difficulty()
-            return player.Player(name1), ai.Ai(difficulty)
+            return human_player.Player(name1), ai_player.Ai(difficulty)
         print(&#34;Invalid name&#34;)
         return self.select_vs_ai()
 
@@ -285,6 +286,7 @@ class Ui(cmd.Cmd):
         self.completekey = &#34;tab&#34;
         self.cmdqueue = []
         self.high_score = score_board.ScoreBoard()
+        self.game1 = game
 
         self.do_menu(None)
 
@@ -332,13 +334,13 @@ class Ui(cmd.Cmd):
         &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
         player1, player2 = self.set_game_type()
 
-        game1 = game.Game(player1, player2)
+        self.game1 = game.Game(player1, player2)
         print(&#34;\nGame is starting...\n&#34;)
-        game1.start()
+        self.game1.start()
 
-        if game1.is_game_over():
-            print(f&#34;{game1.current_player.name} won this game&#34;)
-            self.high_score.up_date_score(game1)
+        if self.game1.is_game_over():
+            print(f&#34;{self.game1.current_player.name} won this game&#34;)
+            self.high_score.up_date_score(self.game1)
 
     def set_game_type(self):
         &#34;&#34;&#34;Select game type, return players in new game.&#34;&#34;&#34;
@@ -360,7 +362,7 @@ class Ui(cmd.Cmd):
 
         valid_names = self.is_valid_name(name1) and self.is_valid_name(name2)
         if valid_names and name1 != name2:
-            return player.Player(name1), player.Player(name2)
+            return human_player.Player(name1), human_player.Player(name2)
         print(&#34;Invalid name&#34;)
         return self.select_vs_player()
 
@@ -370,7 +372,7 @@ class Ui(cmd.Cmd):
 
         if self.is_valid_name(name1):
             difficulty = self.set_difficulty()
-            return player.Player(name1), ai.Ai(difficulty)
+            return human_player.Player(name1), ai_player.Ai(difficulty)
         print(&#34;Invalid name&#34;)
         return self.select_vs_ai()
 
@@ -673,13 +675,13 @@ class Ui(cmd.Cmd):
     &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
     player1, player2 = self.set_game_type()
 
-    game1 = game.Game(player1, player2)
+    self.game1 = game.Game(player1, player2)
     print(&#34;\nGame is starting...\n&#34;)
-    game1.start()
+    self.game1.start()
 
-    if game1.is_game_over():
-        print(f&#34;{game1.current_player.name} won this game&#34;)
-        self.high_score.up_date_score(game1)</code></pre>
+    if self.game1.is_game_over():
+        print(f&#34;{self.game1.current_player.name} won this game&#34;)
+        self.high_score.up_date_score(self.game1)</code></pre>
 </details>
 </dd>
 <dt id="ui.Ui.do_board"><code class="name flex">
@@ -838,13 +840,13 @@ class Ui(cmd.Cmd):
     &#34;&#34;&#34;Select game type and start new game.&#34;&#34;&#34;
     player1, player2 = self.set_game_type()
 
-    game1 = game.Game(player1, player2)
+    self.game1 = game.Game(player1, player2)
     print(&#34;\nGame is starting...\n&#34;)
-    game1.start()
+    self.game1.start()
 
-    if game1.is_game_over():
-        print(f&#34;{game1.current_player.name} won this game&#34;)
-        self.high_score.up_date_score(game1)</code></pre>
+    if self.game1.is_game_over():
+        print(f&#34;{self.game1.current_player.name} won this game&#34;)
+        self.high_score.up_date_score(self.game1)</code></pre>
 </details>
 </dd>
 <dt id="ui.Ui.invalid_choice"><code class="name flex">
@@ -893,7 +895,7 @@ class Ui(cmd.Cmd):
 
     if self.is_valid_name(name1):
         difficulty = self.set_difficulty()
-        return player.Player(name1), ai.Ai(difficulty)
+        return human_player.Player(name1), ai_player.Ai(difficulty)
     print(&#34;Invalid name&#34;)
     return self.select_vs_ai()</code></pre>
 </details>
@@ -914,7 +916,7 @@ class Ui(cmd.Cmd):
 
     valid_names = self.is_valid_name(name1) and self.is_valid_name(name2)
     if valid_names and name1 != name2:
-        return player.Player(name1), player.Player(name2)
+        return human_player.Player(name1), human_player.Player(name2)
     print(&#34;Invalid name&#34;)
     return self.select_vs_player()</code></pre>
 </details>
