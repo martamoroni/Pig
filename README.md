@@ -65,3 +65,4 @@ To regenerate the documentation from the code, including the UML diagrams, go to
 ```
 make doc
 ```
+If you encounter errors while generating documentation make sure that graphviz is installed on your system.
