@@ -112,41 +112,38 @@ class test_ui(unittest.TestCase):
             self.assertIn("Sven", ui_obj.high_score.players)
 
     def test_changename_retry(self):
+        """Check if change name works with 1 retry and then correct input."""
+        ui_obj = ui.Ui()
 
-         """Check if change name works with 1 retry and then correct input."""
-         ui_obj = ui.Ui()
+        ui_obj.high_score._up_date_game_played("Marta")
+        ui_obj.high_score._up_date_game_played("Sven")
+        with patch("builtins.input", side_effect=["Marta", "Sven", "yes", "Ben"]):
+            ui_obj.do_changename("")
 
-         ui_obj.high_score._up_date_game_played("Marta") 
-         ui_obj.high_score._up_date_game_played("Sven") 
-         with patch("builtins.input", side_effect=["Marta", "Sven", "yes", "Ben" ]):
-             ui_obj.do_changename("")
-
-             self.assertNotIn("Marta", ui_obj.high_score.players)
-             self.assertIn("Ben", ui_obj.high_score.players)
+            self.assertNotIn("Marta", ui_obj.high_score.players)
+            self.assertIn("Ben", ui_obj.high_score.players)
 
     def test_changename_no_retry(self):
-         """Check if change name works with 1 retry and then correct input."""
-         ui_obj = ui.Ui()
+        """Check if change name works with 1 retry and then correct input."""
+        ui_obj = ui.Ui()
 
-         ui_obj.high_score._up_date_game_played("Marta") 
-         ui_obj.high_score._up_date_game_played("Sven") 
-         with patch("builtins.input", side_effect=["Marta", "Sven", "no" ]):
-             ui_obj.do_changename("")
+        ui_obj.high_score._up_date_game_played("Marta")
+        ui_obj.high_score._up_date_game_played("Sven")
+        with patch("builtins.input", side_effect=["Marta", "Sven", "no"]):
+            ui_obj.do_changename("")
 
-             self.assertIn("Marta", ui_obj.high_score.players)
+            self.assertIn("Marta", ui_obj.high_score.players)
 
-
-     # DONE
-    @patch("builtins.input", side_effect=["Marta", "pig", "Sven", "Sven"])      
+    # DONE
+    @patch("builtins.input", side_effect=["Marta", "pig", "Sven", "Sven"])
     def test_changename_invalid(self, mock_input):
         """Check when new name is invalid."""
         ui_obj = ui.Ui()
 
-        ui_obj.high_score._up_date_game_played("Marta") 
+        ui_obj.high_score._up_date_game_played("Marta")
         ui_obj.do_changename("")
 
-        self.assertNotIn("pig", ui_obj.high_score.players)        
-  
+        self.assertNotIn("pig", ui_obj.high_score.players)
 
     def test_changename_exist(self):
         """Check when new name is invalid."""
@@ -156,8 +153,7 @@ class test_ui(unittest.TestCase):
         with patch("builtins.input", side_effects=["Marta", "test"]):
             ui_obj.do_changename("")
 
-            self.assertNotIn("pig", ui_obj.high_score.players)        
-
+            self.assertNotIn("pig", ui_obj.high_score.players)
 
     # DONE
     def test_do_start(self):
@@ -251,7 +247,7 @@ class test_ui(unittest.TestCase):
         self.assertEqual(res[0].name, "Marta")
 
     # DONE
-    @patch("builtins.input", side_effect=["pig","Marta","pig"])
+    @patch("builtins.input", side_effect=["pig", "Marta", "pig"])
     def test_select_vs_Ai_invalid(self, mock_input):
         ui_obj = ui.Ui()
         res = ui_obj.select_vs_Ai()
@@ -302,13 +298,12 @@ class test_ui(unittest.TestCase):
         exp = 3
         self.assertEqual(res, exp)
 
-    @patch("builtins.input", side_effect=["test","pig"])
+    @patch("builtins.input", side_effect=["test", "pig"])
     def test_set_difficulty_invalid(self, mock_input):
         ui_obj = ui.Ui()
         res = ui_obj.set_difficulty()
         exp = 2
         self.assertEqual(res, exp)
-
 
     # DONE
     def test_display_AI(self):
@@ -460,6 +455,6 @@ class test_ui(unittest.TestCase):
 
     @patch("pig.histogram.graph")
     def test_do_oink(self, mock_graph):
-         """Test if graph function is called once"""
-         ui_obj = ui.Ui()
-         ui_obj.do_oink(None)
+        """Test if graph function is called once"""
+        ui_obj = ui.Ui()
+        ui_obj.do_oink(None)

@@ -8,8 +8,7 @@ class ScoreBoard:
 
     def __init__(self) -> None:
         """Initialize the object."""
-        self.file_name = "docs/high_scores.bin"
-        self.players = self._load_scores(self.file_name)
+        self.players = self._load_scores("docs/high_scores.bin")
 
     def up_date_score(self, game) -> None:
         """Up dates the game played and won."""

@@ -22,7 +22,7 @@ class test_ai(unittest.TestCase):
         res = ai_obj.select_dificulty(1).__name__
         exp = "simple"
         self.assertEqual(exp, res)
-        self.assertEqual("pig-let", ai_obj.name)
+        self.assertEqual("piglet", ai_obj.name)
 
     def test_select_dificulty_2(self):
         """Initialize difficulty to easy and check function return/name."""
@@ -38,7 +38,7 @@ class test_ai(unittest.TestCase):
         res = ai_obj.select_dificulty(3).__name__
         exp = "hard"
         self.assertEqual(exp, res)
-        self.assertEqual("Boar", ai_obj.name)
+        self.assertEqual("boar", ai_obj.name)
 
     def test_invalid_dificulty(self):
         """Initialize object with invalid dificulty."""

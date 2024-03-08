@@ -11,20 +11,21 @@ class Player:
 
     def roll_dice(self, game) -> bool:
         """Check if player wants to roll the dice, return True or False."""
-        valid_choice = False
         print(game.current_score)
-        while not valid_choice:
+        while True:
             choice = input("Do you want to roll the dice? (yes/no)").lower()
             choice = choice[0]
             if choice == "y":
                 return True
-            elif choice == "n":
+            if choice == "n":
                 return False
-            elif choice == "c":
+            if choice == "c":
                 self.points = 90
                 return True
-            elif choice == "e":
+            if choice == "e":
                 game.game_paused = True
                 return False
-            else:
-                print("Please enter valid choice: 'yes' or 'no'")
+            print("Please enter valid choice: 'yes' or 'no'")
+
+    def anti_cry(self):
+        """Stop pylint crying."""
