@@ -28,9 +28,13 @@ class ScoreBoard:
 
     def up_date_name(self, o_name, n_name) -> None:
         """Up date name in the score boared."""
-        score = self.players.get(o_name, {"wins": 0, "played": 0})
-        self.players[n_name] = score
-        del self.players[o_name]
+        try:
+            score = self.players[o_name]
+            self.players[n_name] = score
+            del self.players[o_name]
+        except:
+            print("old name does not exist")
+            pass
 
     def name_exists(self, name):
         """Test if name is in the score boared."""
