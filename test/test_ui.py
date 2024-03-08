@@ -205,18 +205,18 @@ class test_ui(unittest.TestCase):
     def test_set_game_type_vs_Ai(self, mock_input):
         ui_obj = ui.Ui()
 
-        with patch.object(ui_obj, "select_vs_Ai") as mock_select_vs_Ai:
+        with patch.object(ui_obj, "select_vs_ai") as mock_select_vs_ai:
             ui_obj.set_game_type()
-            mock_select_vs_Ai.assert_called_once()
+            mock_select_vs_ai.assert_called_once()
 
     # DONE
     @patch("builtins.input", side_effect=["3", "2"])
     def test_set_game_type_invalid_choice(self, mock_invalid_choice):
         ui_obj = ui.Ui()
         with patch.object(ui_obj, "invalid_choice") as mock_invalid_choice:
-            with patch.object(ui_obj, "select_vs_Ai") as mock_select_vs_Ai:
+            with patch.object(ui_obj, "select_vs_ai") as mock_select_vs_ai:
                 ui_obj.set_game_type()
-                mock_select_vs_Ai.assert_called_once()
+                mock_select_vs_ai.assert_called_once()
                 mock_invalid_choice.assert_called_once()
 
     # DONE
@@ -248,7 +248,7 @@ class test_ui(unittest.TestCase):
 
     # DONE
     @patch("builtins.input", side_effect=["pig", "Marta", "pig"])
-    def test_select_vs_Ai_invalid(self, mock_input):
+    def test_select_vs_ai_invalid(self, mock_input):
         ui_obj = ui.Ui()
         res = ui_obj.select_vs_ai()
 
@@ -314,7 +314,7 @@ class test_ui(unittest.TestCase):
         sys.stdout = captured_output
 
         # Test for piglet
-        ui_obj.display_AI("piglet", PIGLET_ART)
+        ui_obj.display_ai("piglet", PIGLET_ART)
         exp_output = "piglet is approaching... " + PIGLET_ART
 
         printed_output = captured_output.getvalue()
@@ -329,7 +329,7 @@ class test_ui(unittest.TestCase):
         captured_output.seek(0)  # Move position to beginning
 
         # Test for pig
-        ui_obj.display_AI("pig", PIG_ART)
+        ui_obj.display_ai("pig", PIG_ART)
         exp_output = "pig is approaching... " + PIG_ART
 
         printed_output = captured_output.getvalue()
@@ -344,7 +344,7 @@ class test_ui(unittest.TestCase):
         captured_output.seek(0)
 
         # Test for boar
-        ui_obj.display_AI("boar", BOAR_ART)
+        ui_obj.display_ai("boar", BOAR_ART)
         exp_output = "boar is approaching... " + BOAR_ART
 
         printed_output = captured_output.getvalue()
