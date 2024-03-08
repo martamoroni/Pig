@@ -119,9 +119,7 @@ class Ui(cmd.Cmd):
         name1 = input("\nName player 1: ")
         name2 = input("Name player 2: ")
 
-        if (self.is_valid_name(name1) and
-                self.is_valid_name(name2) and
-                name1 != name2):
+        if self.is_valid_name(name1) and self.is_valid_name(name2) and name1 != name2:
             return player.Player(name1), player.Player(name2)
         print("Invalid name")
         return self.select_vs_player()

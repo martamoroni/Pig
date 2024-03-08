@@ -145,7 +145,6 @@ class test_ui(unittest.TestCase):
 
         self.assertNotIn("pig", ui_obj.high_score.players)
 
-  
     def test_changename_exist(self):
         """Check when new name is invalid."""
         ui_obj = ui.Ui()
