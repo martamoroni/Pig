@@ -97,6 +97,7 @@ pdoc:
 
 uml:
 	@$(call MESSAGE,$@)
+	install -d doc/uml
 	pyreverse -S -o png -p pig -d doc/uml pig
 
 
