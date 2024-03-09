@@ -40,7 +40,7 @@ class ScoreBoard:
         self.players = self._load_scores(&#34;docs/high_scores.bin&#34;)
 
     def up_date_score(self, game) -&gt; None:
-        &#34;&#34;&#34;Up dates the game played and won.&#34;&#34;&#34;
+        &#34;&#34;&#34;Up date the game played and won.&#34;&#34;&#34;
         self._up_date_game_played(game.player1.name)
         self._up_date_game_played(game.player2.name)
         self._up_date_game_won(game.current_player.name)
@@ -56,7 +56,7 @@ class ScoreBoard:
         self.players[ply][&#34;wins&#34;] += 1
 
     def up_date_name(self, o_name, n_name) -&gt; None:
-        &#34;&#34;&#34;Up date name in the score boared.&#34;&#34;&#34;
+        &#34;&#34;&#34;Up date name in the score board.&#34;&#34;&#34;
         try:
             score = self.players[o_name]
             self.players[n_name] = score
@@ -65,7 +65,7 @@ class ScoreBoard:
             print(&#34;old name does not exist&#34;)
 
     def name_exists(self, name):
-        &#34;&#34;&#34;Test if name is in the score boared.&#34;&#34;&#34;
+        &#34;&#34;&#34;Test if name is in the score board.&#34;&#34;&#34;
         return name in self.players
 
     def save_scores(self, file_name=&#34;docs/high_scores.bin&#34;) -&gt; None:
@@ -74,16 +74,16 @@ class ScoreBoard:
             pickle.dump(self.players, f)
 
     def _load_scores(self, file_name) -&gt; dict:
-        &#34;&#34;&#34;Load score boared from existing file or sets empty dict.&#34;&#34;&#34;
+        &#34;&#34;&#34;Load score board from existing file or set empty dict.&#34;&#34;&#34;
         try:
             with open(file_name, &#34;rb&#34;) as f:
                 return pickle.load(f)
         except FileNotFoundError:
-            print(&#34;cring Error no scores useing empty score board&#34;)
+            print(&#34;Error: no scores using empty score board&#34;)
             return {}
 
     def calc_percent(self):
-        &#34;&#34;&#34;Calc win percentig.&#34;&#34;&#34;
+        &#34;&#34;&#34;Calc win percentage.&#34;&#34;&#34;
         player_percent = []
         longest = 0
         for player in self.players:
@@ -97,7 +97,7 @@ class ScoreBoard:
         return player_percent, longest
 
     def __str__(self) -&gt; str:
-        &#34;&#34;&#34;Display the current score boared.&#34;&#34;&#34;
+        &#34;&#34;&#34;Display the current score board.&#34;&#34;&#34;
         player_percent, longest = self.calc_percent()
         score_boared = f&#34;{&#39;Name&#39;:&lt;{longest+3}}{&#39;Wins&#39;:&gt;7}&#34;
         score_boared += f&#34;{&#39;Played&#39;:&gt;7}{&#39;Percent&#39;:&gt;11}\n&#34;
@@ -138,7 +138,7 @@ class ScoreBoard:
         self.players = self._load_scores(&#34;docs/high_scores.bin&#34;)
 
     def up_date_score(self, game) -&gt; None:
-        &#34;&#34;&#34;Up dates the game played and won.&#34;&#34;&#34;
+        &#34;&#34;&#34;Up date the game played and won.&#34;&#34;&#34;
         self._up_date_game_played(game.player1.name)
         self._up_date_game_played(game.player2.name)
         self._up_date_game_won(game.current_player.name)
@@ -154,7 +154,7 @@ class ScoreBoard:
         self.players[ply][&#34;wins&#34;] += 1
 
     def up_date_name(self, o_name, n_name) -&gt; None:
-        &#34;&#34;&#34;Up date name in the score boared.&#34;&#34;&#34;
+        &#34;&#34;&#34;Up date name in the score board.&#34;&#34;&#34;
         try:
             score = self.players[o_name]
             self.players[n_name] = score
@@ -163,7 +163,7 @@ class ScoreBoard:
             print(&#34;old name does not exist&#34;)
 
     def name_exists(self, name):
-        &#34;&#34;&#34;Test if name is in the score boared.&#34;&#34;&#34;
+        &#34;&#34;&#34;Test if name is in the score board.&#34;&#34;&#34;
         return name in self.players
 
     def save_scores(self, file_name=&#34;docs/high_scores.bin&#34;) -&gt; None:
@@ -172,16 +172,16 @@ class ScoreBoard:
             pickle.dump(self.players, f)
 
     def _load_scores(self, file_name) -&gt; dict:
-        &#34;&#34;&#34;Load score boared from existing file or sets empty dict.&#34;&#34;&#34;
+        &#34;&#34;&#34;Load score board from existing file or set empty dict.&#34;&#34;&#34;
         try:
             with open(file_name, &#34;rb&#34;) as f:
                 return pickle.load(f)
         except FileNotFoundError:
-            print(&#34;cring Error no scores useing empty score board&#34;)
+            print(&#34;Error: no scores using empty score board&#34;)
             return {}
 
     def calc_percent(self):
-        &#34;&#34;&#34;Calc win percentig.&#34;&#34;&#34;
+        &#34;&#34;&#34;Calc win percentage.&#34;&#34;&#34;
         player_percent = []
         longest = 0
         for player in self.players:
@@ -195,7 +195,7 @@ class ScoreBoard:
         return player_percent, longest
 
     def __str__(self) -&gt; str:
-        &#34;&#34;&#34;Display the current score boared.&#34;&#34;&#34;
+        &#34;&#34;&#34;Display the current score board.&#34;&#34;&#34;
         player_percent, longest = self.calc_percent()
         score_boared = f&#34;{&#39;Name&#39;:&lt;{longest+3}}{&#39;Wins&#39;:&gt;7}&#34;
         score_boared += f&#34;{&#39;Played&#39;:&gt;7}{&#39;Percent&#39;:&gt;11}\n&#34;
@@ -214,13 +214,13 @@ class ScoreBoard:
 <span>def <span class="ident">calc_percent</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Calc win percentig.</p></div>
+<div class="desc"><p>Calc win percentage.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def calc_percent(self):
-    &#34;&#34;&#34;Calc win percentig.&#34;&#34;&#34;
+    &#34;&#34;&#34;Calc win percentage.&#34;&#34;&#34;
     player_percent = []
     longest = 0
     for player in self.players:
@@ -238,13 +238,13 @@ class ScoreBoard:
 <span>def <span class="ident">name_exists</span></span>(<span>self, name)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Test if name is in the score boared.</p></div>
+<div class="desc"><p>Test if name is in the score board.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def name_exists(self, name):
-    &#34;&#34;&#34;Test if name is in the score boared.&#34;&#34;&#34;
+    &#34;&#34;&#34;Test if name is in the score board.&#34;&#34;&#34;
     return name in self.players</code></pre>
 </details>
 </dd>
@@ -267,13 +267,13 @@ class ScoreBoard:
 <span>def <span class="ident">up_date_name</span></span>(<span>self, o_name, n_name) ‑> None</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Up date name in the score boared.</p></div>
+<div class="desc"><p>Up date name in the score board.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def up_date_name(self, o_name, n_name) -&gt; None:
-    &#34;&#34;&#34;Up date name in the score boared.&#34;&#34;&#34;
+    &#34;&#34;&#34;Up date name in the score board.&#34;&#34;&#34;
     try:
         score = self.players[o_name]
         self.players[n_name] = score
@@ -286,13 +286,13 @@ class ScoreBoard:
 <span>def <span class="ident">up_date_score</span></span>(<span>self, game) ‑> None</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Up dates the game played and won.</p></div>
+<div class="desc"><p>Up date the game played and won.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def up_date_score(self, game) -&gt; None:
-    &#34;&#34;&#34;Up dates the game played and won.&#34;&#34;&#34;
+    &#34;&#34;&#34;Up date the game played and won.&#34;&#34;&#34;
     self._up_date_game_played(game.player1.name)
     self._up_date_game_played(game.player2.name)
     self._up_date_game_won(game.current_player.name)</code></pre>
