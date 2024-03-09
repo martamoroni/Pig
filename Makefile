@@ -96,19 +96,11 @@ pdoc:
 	pdoc --force --html --output-dir doc/api pig/*.py
 
 uml:
+	@$(call MESSAGE,$@)
 	pyreverse -S -o png -p pig -d doc/uml pig
 
 
-pyreverse:
-
-	@$(call MESSAGE,$@)
-	install -d doc/pyreverse
-	pyreverse pig/*.py
-	dot -Tpng classes.dot -o doc/pyreverse/classes.png
-	dot -Tpng packages.dot -o doc/pyreverse/packages.png
-	rm -f classes.dot packages.dot
-
-doc: pdoc pyreverse uml #pydoc #sphinx
+doc: pdoc uml #pydoc #sphinx
 
 
 radon-cc:
